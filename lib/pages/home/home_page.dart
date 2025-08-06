@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
+import 'package:ricky_and_martie_app/widgets/character_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -104,28 +105,18 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return ListView.builder(
+    return GridView.builder(
+      padding: const EdgeInsets.all(8.0),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.8,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 8.0,
+      ),
       itemCount: characters.length,
       itemBuilder: (context, index) {
         final character = characters[index];
-        return Card(
-          margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(character.image),
-            ),
-            title: Text(character.name),
-            subtitle: Text('${character.species} - ${character.status}'),
-            onTap: () {
-              // Aqui você pode navegar para os detalhes do personagem
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Clicou em: ${character.name}'),
-                ),
-              );
-            },
-          ),
-        );
+        return CharacterCard(character: character);
       },
     );
   }
