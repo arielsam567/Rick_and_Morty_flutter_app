@@ -64,6 +64,7 @@ class CharacterCard extends StatelessWidget {
                   },
                 ),
               ),
+              const SizedBox(height: 12),
               Text(
                 character.name,
                 style: const TextStyle(

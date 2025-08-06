@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.all(8.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.8,
+        // childAspectRatio: 0.9,
         crossAxisSpacing: 8.0,
         mainAxisSpacing: 8.0,
       ),
