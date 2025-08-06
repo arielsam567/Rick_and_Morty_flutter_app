@@ -1,4 +1,5 @@
-import 'package:ricky_and_martie_app/core/network/http_client_abst.dart';
+import 'package:dartz/dartz.dart';
+import 'package:ricky_and_martie_app/core/http_client.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/models/paginated_response.dart';
 
@@ -7,60 +8,60 @@ class RickAndMortyRepository {
 
   RickAndMortyRepository(this._httpClient);
 
-  Future<PaginatedResponse<Character>> getCharacters({int page = 1}) async {
+  Future<Either<String, PaginatedResponse<Character>>> getCharacters(
+      {int page = 1}) async {
     try {
       final response =
           await _httpClient.get('character', queryParameters: {'page': page});
 
-      return PaginatedResponse<Character>.fromJson(
+      return Right(PaginatedResponse<Character>.fromJson(
         response.data,
         (json) => Character.fromJson(json),
-      );
+      ));
     } catch (e) {
-      throw Exception('Erro ao buscar personagens: $e');
+      return Left('Erro ao buscar personagens: $e');
     }
   }
 
-  Future<Character> getCharacterById(int id) async {
+  Future<Either<String, Character>> getCharacterById(int id) async {
     try {
       final response = await _httpClient.get('character/$id');
-      return Character.fromJson(response.data);
+      return Right(Character.fromJson(response.data));
     } catch (e) {
-      throw Exception('Erro ao buscar personagem: $e');
+      return Left('Erro ao buscar personagem: $e');
     }
   }
 
-  /// Busca personagens por nome
-  Future<PaginatedResponse<Character>> searchCharactersByName(
+  Future<Either<String, PaginatedResponse<Character>>> searchCharactersByName(
       String name) async {
     try {
       final response =
           await _httpClient.get('character', queryParameters: {'name': name});
 
-      return PaginatedResponse<Character>.fromJson(
+      return Right(PaginatedResponse<Character>.fromJson(
         response.data,
         (json) => Character.fromJson(json),
-      );
+      ));
     } catch (e) {
-      throw Exception('Erro ao buscar personagens por nome: $e');
+      return Left('Erro ao buscar personagens por nome: $e');
     }
   }
 
-  /// Busca múltiplos personagens por IDs
-  Future<List<Character>> getCharactersByIds(List<int> ids) async {
+  Future<Either<String, List<Character>>> getCharactersByIds(
+      List<int> ids) async {
     try {
       final idsString = ids.join(',');
       final response = await _httpClient.get('character/$idsString');
 
       if (ids.length == 1) {
-        return [Character.fromJson(response.data)];
+        return Right([Character.fromJson(response.data)]);
       } else {
-        return (response.data as List)
+        return Right((response.data as List)
             .map((json) => Character.fromJson(json))
-            .toList();
+            .toList());
       }
     } catch (e) {
-      throw Exception('Erro ao buscar personagens por IDs: $e');
+      return Left('Erro ao buscar personagens por IDs: $e');
     }
   }
 }

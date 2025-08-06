@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
 
-/// Exemplo de como usar o RickAndMortyRepository refatorado
-/// Este arquivo demonstra como usar o repository que agora usa abstração HTTP
-class RepositoryUsageExample extends StatefulWidget {
-  const RepositoryUsageExample({super.key});
+/// Exemplo simples de como usar o RickAndMortyRepository
+class SimpleUsageExample extends StatefulWidget {
+  const SimpleUsageExample({super.key});
 
   @override
-  State<RepositoryUsageExample> createState() => _RepositoryUsageExampleState();
+  State<SimpleUsageExample> createState() => _SimpleUsageExampleState();
 }
 
-class _RepositoryUsageExampleState extends State<RepositoryUsageExample> {
+class _SimpleUsageExampleState extends State<SimpleUsageExample> {
   List<dynamic> characters = [];
   bool isLoading = false;
   String? errorMessage;
@@ -28,57 +27,66 @@ class _RepositoryUsageExampleState extends State<RepositoryUsageExample> {
       errorMessage = null;
     });
 
-    try {
-      // Acessando o repository através do Provider
-      // Agora o repository usa abstração HTTP em vez do Dio diretamente
-      final repository = context.read<RickAndMortyRepository>();
+    final repository = context.read<RickAndMortyRepository>();
+    final result = await repository.getCharacters();
 
-      // Buscando personagens
-      final response = await repository.getCharacters();
-
-      setState(() {
-        characters = response.results;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        errorMessage = e.toString();
-        isLoading = false;
-      });
-    }
+    result.fold(
+      (error) {
+        setState(() {
+          errorMessage = error;
+          isLoading = false;
+        });
+      },
+      (response) {
+        setState(() {
+          characters = response.results;
+          isLoading = false;
+        });
+      },
+    );
   }
 
   Future<void> _searchCharacter(String name) async {
-    try {
-      final repository = context.read<RickAndMortyRepository>();
-      final response = await repository.searchCharactersByName(name);
+    final repository = context.read<RickAndMortyRepository>();
+    final result = await repository.searchCharactersByName(name);
 
-      setState(() {
-        characters = response.results;
-      });
-    } catch (e) {
-      setState(() {
-        errorMessage = e.toString();
-      });
-    }
+    result.fold(
+      (error) {
+        setState(() {
+          errorMessage = error;
+        });
+      },
+      (response) {
+        setState(() {
+          characters = response.results;
+        });
+      },
+    );
   }
 
   Future<void> _getCharacterById(int id) async {
-    try {
-      final repository = context.read<RickAndMortyRepository>();
-      final character = await repository.getCharacterById(id);
-      // Aqui você pode usar o character encontrado
-      print('Personagem encontrado: ${character.name}');
-    } catch (e) {
-      print('Erro ao buscar personagem: $e');
-    }
+    final repository = context.read<RickAndMortyRepository>();
+    final result = await repository.getCharacterById(id);
+
+    result.fold(
+      (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error)),
+        );
+      },
+      (character) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Personagem: ${character.name}')),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Exemplo de Uso do Repository'),
+        title: const Text('Exemplo Simples'),
       ),
       body: _buildBody(),
     );
@@ -86,9 +94,7 @@ class _RepositoryUsageExampleState extends State<RepositoryUsageExample> {
 
   Widget _buildBody() {
     if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (errorMessage != null) {

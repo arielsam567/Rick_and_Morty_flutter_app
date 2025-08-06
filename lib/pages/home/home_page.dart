@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
-import 'package:ricky_and_martie_app/features/characters/domain/entities/character.dart';
-import 'package:ricky_and_martie_app/features/characters/domain/usecases/get_characters.dart';
+import 'package:ricky_and_martie_app/models/character.dart';
+import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,19 +29,19 @@ class _HomePageState extends State<HomePage> {
       errorMessage = null;
     });
 
-    final getCharacters = context.read<GetCharacters>();
-    final result = await getCharacters(const GetCharactersParams());
+    final repository = context.read<RickAndMortyRepository>();
+    final result = await repository.getCharacters();
 
     result.fold(
-      (failure) {
+      (error) {
         setState(() {
-          errorMessage = failure.message;
+          errorMessage = error;
           isLoading = false;
         });
       },
-      (characters) {
+      (response) {
         setState(() {
-          this.characters = characters;
+          characters = response.results;
           isLoading = false;
         });
       },
