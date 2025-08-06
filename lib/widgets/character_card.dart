@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
+import 'package:ricky_and_martie_app/widgets/gender_indicator.dart';
+import 'package:ricky_and_martie_app/widgets/status_indicator.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
@@ -72,7 +74,7 @@ class CharacterCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Nome sublinhado
+                    //name
                     Text(
                       character.name,
                       style: const TextStyle(
@@ -83,7 +85,7 @@ class CharacterCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    // Espécie em maiúsculas
+                    //species
                     Text(
                       character.species.toUpperCase(),
                       style: const TextStyle(
@@ -93,65 +95,29 @@ class CharacterCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    // Status e gênero na mesma linha
+                    // life status and gender
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Status com ponto verde
-                        Row(
-                          children: [
-                            Container(
-                              width: 8,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                color: character.status.toLowerCase() == 'alive'
-                                    ? Colors.green
-                                    : character.status.toLowerCase() == 'dead'
-                                        ? Colors.red
-                                        : Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              character.status,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 16),
+                        StatusIndicator(status: character.status),
                         // Gênero com símbolo
-                        Row(
-                          children: [
-                            Icon(
-                              character.gender.toLowerCase() == 'male'
-                                  ? Icons.male
-                                  : Icons.female,
-                              size: 16,
-                              color: Colors.black54,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              character.gender,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding: EdgeInsets.only(right: 16),
+                          child: GenderIndicator(gender: character.gender),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: Colors.black54,
+              Padding(
+                padding: EdgeInsets.only(right: 2),
+                child: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
