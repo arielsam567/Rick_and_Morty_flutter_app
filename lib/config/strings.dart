@@ -1,3 +1,3 @@
-class Strings { 
-  static const String appName = 'Eventos Wickedbotz'; 
+class Strings {
+  static const String appName = 'Ricky and Martie';
 }

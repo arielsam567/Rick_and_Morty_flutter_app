@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:site_wickedbotz/config/strings.dart';
-import 'package:site_wickedbotz/config/themes/custom_themes.dart';
-import 'package:site_wickedbotz/services/routes.dart';
-import 'package:site_wickedbotz/services/storage.dart';
+import 'package:ricky_and_martie_app/config/strings.dart';
+import 'package:ricky_and_martie_app/config/themes/custom_themes.dart';
+import 'package:ricky_and_martie_app/services/routes.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -13,27 +11,12 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider(
-    //       create: (context) {
-    //         Storage.init();
-    //       },
-    //       lazy: false,
-    //     ),
-    //   ],
-    //   child: MaterialApp(
-    //     title: Strings.appName,
-    //     theme: CustomThemes().defaultTheme,
-    //     routes: Routes().routes(context),
-    //     onGenerateInitialRoutes: (initialRoute) => [
-    //       Routes.generateRoute(RouteSettings(name: initialRoute))!,
-    //     ],
-    //     onGenerateRoute: Routes.generateRoute,
-    //     navigatorKey: Routes.navigator,
-    //     scaffoldMessengerKey: scaffoldMessengerKey,
-    //     debugShowCheckedModeBanner: false,
-    //   ),
-    // );
+    return MaterialApp.router(
+      title: Strings.appName,
+      theme: CustomThemes().defaultTheme,
+      routerConfig: AppRouter.router,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
