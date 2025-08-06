@@ -1,11 +1,5 @@
 import 'package:dio/dio.dart';
 
-/// Abstração simples para cliente HTTP
-abstract class HttpClient {
-  Future<HttpResponse> get(String path,
-      {Map<String, dynamic>? queryParameters});
-}
-
 /// Resposta HTTP padronizada
 class HttpResponse {
   final dynamic data;
@@ -17,13 +11,12 @@ class HttpResponse {
   });
 }
 
-/// Implementação do HttpClient usando Dio
-class DioHttpClient implements HttpClient {
+/// Cliente HTTP usando Dio
+class HttpClient {
   final Dio _dio;
 
-  DioHttpClient(this._dio);
+  HttpClient(this._dio);
 
-  @override
   Future<HttpResponse> get(String path,
       {Map<String, dynamic>? queryParameters}) async {
     try {

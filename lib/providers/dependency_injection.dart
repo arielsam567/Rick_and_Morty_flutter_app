@@ -11,9 +11,9 @@ class DependencyInjection {
       create: (_) => DioConfig.createDio(),
     ),
 
-    // Provider para o HttpClient (abstração)
+    // Provider para o HttpClient
     Provider<HttpClient>(
-      create: (context) => DioHttpClient(context.read<Dio>()),
+      create: (context) => HttpClient(context.read<Dio>()),
     ),
 
     // Provider para o RickAndMortyRepository
