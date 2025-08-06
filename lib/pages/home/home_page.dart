@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/pages/home/home_controller.dart';
 import 'package:ricky_and_martie_app/widgets/character_card.dart';
+import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
+import 'package:ricky_and_martie_app/widgets/empty_state_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,35 +38,23 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          _buildSearchField(),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              onChanged: _controller.updateSearchQuery,
+              decoration: InputDecoration(
+                hintText: 'Buscar...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.grey[100],
+              ),
+            ),
+          ),
           Expanded(child: _buildBody()),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navegar para a página de detalhes
-          context.go('/details');
-        },
-        tooltip: 'Ver Detalhes',
-        child: const Icon(Icons.arrow_forward),
-      ),
-    );
-  }
-
-  Widget _buildSearchField() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: TextField(
-        onChanged: _controller.updateSearchQuery,
-        decoration: InputDecoration(
-          hintText: 'Buscar...',
-          prefixIcon: const Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          filled: true,
-          fillColor: Colors.grey[100],
-        ),
       ),
     );
   }
@@ -79,47 +69,21 @@ class _HomePageState extends State<HomePage> {
           );
         }
 
-        if (_controller.errorMessage != null) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Erro ao carregar personagens',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Text(_controller.errorMessage!),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _controller.retry,
-                  child: const Text('Tentar Novamente'),
-                ),
-              ],
-            ),
+        if (_controller.errorMessage == null) {
+          return ErrorMessageWidget(
+            icon: Icons.error_outline,
+            title: 'Erro ao carregar personagens',
+            message: _controller.errorMessage,
+            onRetry: _controller.retry,
           );
         }
 
         if (_controller.characters.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.search_off,
-                  size: 64,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  _controller.searchQuery.isEmpty
-                      ? 'Nenhum personagem encontrado'
-                      : 'Nenhum personagem encontrado para "${_controller.searchQuery}"',
-                  style: const TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+          return EmptyStateWidget(
+            icon: Icons.search_off,
+            title: _controller.searchQuery.isEmpty
+                ? 'Nenhum personagem encontrado'
+                : 'Nenhum personagem encontrado para "${_controller.searchQuery}"',
           );
         }
 
