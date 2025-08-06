@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/config/themes/custom_themes.dart';
+import 'package:ricky_and_martie_app/providers/dependency_injection.dart';
 import 'package:ricky_and_martie_app/services/routes.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
@@ -11,12 +13,15 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: Strings.appName,
-      theme: CustomThemes().defaultTheme,
-      routerConfig: AppRouter.router,
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      debugShowCheckedModeBanner: false,
+    return MultiProvider(
+      providers: DependencyInjection.providers,
+      child: MaterialApp.router(
+        title: Strings.appName,
+        theme: CustomThemes().defaultTheme,
+        routerConfig: AppRouter.router,
+        scaffoldMessengerKey: scaffoldMessengerKey,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
