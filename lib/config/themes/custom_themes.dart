@@ -6,97 +6,99 @@ class CustomThemes {
   static const borderRadius = BorderRadius.all(Radius.circular(radiusSize));
 
   static const textStyle = TextStyle(
-    color: MyColors.neutral35,
+    color: MyColors.white,
     fontWeight: FontWeight.w500,
     fontSize: 16.0,
   );
 
   final defaultTheme = ThemeData(
     scaffoldBackgroundColor: MyColors.background,
-    primaryColor: MyColors.amber,
+    primaryColor: MyColors.primary,
     dividerColor: Colors.transparent,
     primaryTextTheme: const TextTheme(
       displayLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       displayMedium: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: MyColors.amber,
+        color: MyColors.secondary,
       ),
       displaySmall: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       headlineLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       headlineMedium: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       headlineSmall: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       bodyLarge: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       bodyMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       bodySmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       titleLarge: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       titleMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       titleSmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       labelLarge: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       labelMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       labelSmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
     ),
     fontFamily: 'Montserrat',
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        shadowColor: WidgetStateProperty.all(MyColors.hover),
-        overlayColor: WidgetStateProperty.all(MyColors.hover),
+        shadowColor:
+            WidgetStateProperty.all(MyColors.white.withValues(alpha: 0.2)),
+        overlayColor:
+            WidgetStateProperty.all(MyColors.white.withValues(alpha: 0.2)),
       ),
     ),
     textSelectionTheme: TextSelectionThemeData(
@@ -105,16 +107,16 @@ class CustomThemes {
       selectionHandleColor: MyColors.primary,
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: MyColors.neutral30.withValues(alpha: 0.04),
+      fillColor: MyColors.white.withValues(alpha: 0.04),
       filled: true,
-      iconColor: MyColors.neutral50,
-      prefixIconColor: MyColors.neutral50,
-      suffixIconColor: MyColors.neutral50,
+      iconColor: MyColors.white,
+      prefixIconColor: MyColors.white,
+      suffixIconColor: MyColors.white,
       contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       enabledBorder: const OutlineInputBorder(
         borderRadius: borderRadius,
         borderSide: BorderSide(
-          color: MyColors.neutral60,
+          color: MyColors.white,
           width: 1.3,
         ),
       ),
@@ -124,10 +126,10 @@ class CustomThemes {
           width: 1.3,
         ),
       ),
-      labelStyle: const TextStyle(color: MyColors.neutral40, fontSize: 14.0),
-      hintStyle: const TextStyle(color: Colors.red, fontSize: 16.0),
-      counterStyle: const TextStyle(color: Colors.red, fontSize: 14.0),
-      suffixStyle: const TextStyle(color: Colors.red, fontSize: 14.0),
+      labelStyle: const TextStyle(color: MyColors.white, fontSize: 14.0),
+      hintStyle: const TextStyle(color: MyColors.error, fontSize: 16.0),
+      counterStyle: const TextStyle(color: MyColors.error, fontSize: 14.0),
+      suffixStyle: const TextStyle(color: MyColors.error, fontSize: 14.0),
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: MyColors.background,
@@ -140,17 +142,17 @@ class CustomThemes {
         color: MyColors.black,
       ),
     ),
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+    colorScheme: ColorScheme.fromSeed(seedColor: MyColors.primary),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: MyColors.neutral30,
+        color: MyColors.white,
       ),
       displayMedium: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
-        color: MyColors.amber,
+        color: MyColors.secondary,
       ),
       displaySmall: TextStyle(
         fontSize: 14,
@@ -158,14 +160,14 @@ class CustomThemes {
         color: MyColors.black,
       ),
     ),
-    cardColor: MyColors.neutral80,
+    cardColor: MyColors.black,
     cardTheme: const CardTheme(
-      color: MyColors.neutral80,
+      color: MyColors.black,
       elevation: 5.0,
-      shadowColor: MyColors.neutral60,
+      shadowColor: MyColors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: MyColors.neutral60,
+          color: MyColors.white,
           width: 1.1,
         ),
         borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -173,7 +175,6 @@ class CustomThemes {
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        //backgroundColor: WidgetStateProperty.all(MyColors.primary),
         foregroundColor: WidgetStateProperty.all(MyColors.white),
         overlayColor:
             WidgetStateProperty.all(MyColors.primary.withValues(alpha: 0.1)),
@@ -196,17 +197,17 @@ class CustomThemes {
       fillColor: WidgetStateProperty.resolveWith(
         (states) {
           if (states.contains(WidgetState.selected)) {
-            return MyColors.neutral60;
+            return MyColors.white;
           }
           return Colors.transparent;
         },
       ),
-      checkColor: WidgetStateProperty.all(MyColors.white),
+      checkColor: WidgetStateProperty.all(MyColors.black),
       overlayColor:
           WidgetStateProperty.all(MyColors.primary.withValues(alpha: 0.1)),
       shape: const RoundedRectangleBorder(
         side: BorderSide(
-          color: MyColors.neutral60,
+          color: MyColors.white,
           width: 1.1,
         ),
         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -214,11 +215,11 @@ class CustomThemes {
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
       color: MyColors.secondary,
-      circularTrackColor: MyColors.neutral60,
+      circularTrackColor: MyColors.white,
       linearMinHeight: 4.0,
-      linearTrackColor: MyColors.neutral60,
-      refreshBackgroundColor: MyColors.neutral90,
+      linearTrackColor: MyColors.white,
+      refreshBackgroundColor: MyColors.black,
     ),
-    dialogTheme: DialogThemeData(backgroundColor: MyColors.neutral90),
+    dialogTheme: DialogThemeData(backgroundColor: MyColors.black),
   );
 }
