@@ -124,13 +124,8 @@ class _HomePageState extends State<HomePage> {
           );
         }
 
-        return GridView.builder(
+        return ListView.builder(
           padding: const EdgeInsets.all(8.0),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-          ),
           itemCount: _controller.characters.length,
           itemBuilder: (context, index) {
             final character = _controller.characters[index];

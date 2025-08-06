@@ -6,8 +6,7 @@ import 'package:ricky_and_martie_app/models/character.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
-  static const double radius = 100.0;
-  static const double imageSize = 120.0;
+  static const double imageSize = 80.0;
 
   const CharacterCard({
     required this.character,
@@ -17,21 +16,24 @@ class CharacterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8.0),
-      elevation: 4.0,
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      color: const Color(0xFFF5F5DC), // Cor bege clara como na imagem
       child: InkWell(
         onTap: () {
-          // Navegar para a tela de detalhes
           context.go('/details/${character.id}');
         },
+        borderRadius: BorderRadius.circular(8.0),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 12,
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
             children: [
+              // Imagem do personagem à esquerda
               ClipRRect(
-                borderRadius: BorderRadius.circular(radius),
+                borderRadius: BorderRadius.circular(8.0),
                 child: CachedNetworkImage(
                   imageUrl: character.image,
                   width: imageSize,
@@ -58,22 +60,98 @@ class CharacterCard extends StatelessWidget {
                       color: Colors.grey[300],
                       child: const Icon(
                         Icons.error,
-                        size: 32,
+                        size: 24,
                       ),
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 12),
-              Text(
-                character.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+              const SizedBox(width: 16),
+              // Informações do personagem à direita
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Nome sublinhado
+                    Text(
+                      character.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    // Espécie em maiúsculas
+                    Text(
+                      character.species.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // Status e gênero na mesma linha
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Status com ponto verde
+                        Row(
+                          children: [
+                            Container(
+                              width: 8,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: character.status.toLowerCase() == 'alive'
+                                    ? Colors.green
+                                    : character.status.toLowerCase() == 'dead'
+                                        ? Colors.red
+                                        : Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              character.status,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 16),
+                        // Gênero com símbolo
+                        Row(
+                          children: [
+                            Icon(
+                              character.gender.toLowerCase() == 'male'
+                                  ? Icons.male
+                                  : Icons.female,
+                              size: 16,
+                              color: Colors.black54,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              character.gender,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Colors.black54,
               ),
             ],
           ),
