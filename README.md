@@ -30,7 +30,7 @@ Este aplicativo permite aos usuários explorar o universo de Rick and Morty atra
      - **Status** (status)
      - **Espécie** (species)
 
-## 🏗️ Arquitetura
+## 📦 Arquitetura
 
 O projeto segue o padrão **MVVM (Model-View-ViewModel)** para garantir:
 - Separação clara de responsabilidades
@@ -48,8 +48,7 @@ O projeto segue o padrão **MVVM (Model-View-ViewModel)** para garantir:
 ## 🛠️ Como Executar
 
 ### Pré-requisitos
-- Flutter 3.27.1 ou superior
-- Dart 3.6.0 ou superior
+- Flutter 3.29.2 ou superior 
 
 ### Instalação
 ```bash
