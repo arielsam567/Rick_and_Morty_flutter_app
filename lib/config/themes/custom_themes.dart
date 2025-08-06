@@ -113,6 +113,13 @@ class CustomThemes {
       prefixIconColor: MyColors.black.withValues(alpha: 0.4),
       suffixIconColor: MyColors.black.withValues(alpha: 0.4),
       contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(
+          color: MyColors.alert.withValues(alpha: 0.4),
+          width: 1.3,
+        ),
+      ),
       enabledBorder: const OutlineInputBorder(
         borderRadius: borderRadius,
         borderSide: BorderSide(
