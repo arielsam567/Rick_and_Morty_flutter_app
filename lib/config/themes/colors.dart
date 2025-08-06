@@ -6,7 +6,7 @@ class MyColors {
   static const secondary = Color(0xff53DAE3);
 
   // Cores de fundo
-  static const background = Color.fromARGB(101, 68, 213, 71);
+  static const background = Color(0xfff0e9dd);
 
   // Cores de estado
   static const error = Color(0xffFF6969);

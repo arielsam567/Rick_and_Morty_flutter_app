@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.appName),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(
         children: [
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       child: TextField(
         onChanged: _controller.updateSearchQuery,
         decoration: InputDecoration(
-          hintText: 'Buscar por nome...',
+          hintText: 'Buscar...',
           prefixIcon: const Icon(Icons.search),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),

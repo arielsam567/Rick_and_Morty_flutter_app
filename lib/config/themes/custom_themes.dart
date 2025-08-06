@@ -107,11 +107,11 @@ class CustomThemes {
       selectionHandleColor: MyColors.primary,
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: MyColors.white.withValues(alpha: 0.04),
+      fillColor: MyColors.black.withValues(alpha: 0.04),
       filled: true,
       iconColor: MyColors.white,
-      prefixIconColor: MyColors.white,
-      suffixIconColor: MyColors.white,
+      prefixIconColor: MyColors.black.withValues(alpha: 0.4),
+      suffixIconColor: MyColors.black.withValues(alpha: 0.4),
       contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       enabledBorder: const OutlineInputBorder(
         borderRadius: borderRadius,
@@ -127,7 +127,8 @@ class CustomThemes {
         ),
       ),
       labelStyle: const TextStyle(color: MyColors.white, fontSize: 14.0),
-      hintStyle: const TextStyle(color: MyColors.error, fontSize: 16.0),
+      hintStyle: TextStyle(
+          color: MyColors.black.withValues(alpha: 0.4), fontSize: 16.0),
       counterStyle: const TextStyle(color: MyColors.error, fontSize: 14.0),
       suffixStyle: const TextStyle(color: MyColors.error, fontSize: 14.0),
     ),
