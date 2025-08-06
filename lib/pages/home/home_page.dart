@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     final getCharacters = context.read<GetCharacters>();
-    final result = await getCharacters(const GetCharactersParams(page: 1));
+    final result = await getCharacters(const GetCharactersParams());
 
     result.fold(
       (failure) {

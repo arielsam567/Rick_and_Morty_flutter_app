@@ -1,4 +1,3 @@
-import 'package:ricky_and_martie_app/features/characters/data/models/character_model.dart';
 
 class PaginatedResponseModel<T> {
   final InfoModel info;

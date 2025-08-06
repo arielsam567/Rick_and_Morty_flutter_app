@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyColors {
+  //deve ser um verde claro, que lembre a cor do ricky e martie
+  static const background = Color.fromARGB(101, 68, 213, 71);
+
   static const amber = Colors.amber;
 
   static const white = Colors.white;

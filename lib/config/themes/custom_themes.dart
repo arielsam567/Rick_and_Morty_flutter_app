@@ -12,7 +12,7 @@ class CustomThemes {
   );
 
   final defaultTheme = ThemeData(
-    scaffoldBackgroundColor: MyColors.neutral90,
+    scaffoldBackgroundColor: MyColors.background,
     primaryColor: MyColors.amber,
     dividerColor: Colors.transparent,
     primaryTextTheme: const TextTheme(
@@ -130,7 +130,7 @@ class CustomThemes {
       suffixStyle: const TextStyle(color: Colors.red, fontSize: 14.0),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: MyColors.neutral90,
+      backgroundColor: MyColors.background,
       iconTheme: IconThemeData(color: MyColors.black),
       centerTitle: true,
       titleTextStyle: TextStyle(
