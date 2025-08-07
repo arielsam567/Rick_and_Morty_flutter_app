@@ -91,7 +91,6 @@ class HomeController extends ChangeNotifier {
 
     result.fold(
       (error) {
-        // Se a mensagem de erro for "Nenhum resultado encontrado", não é um erro real
         if (error == 'Nenhum resultado encontrado') {
           _allCharacters = [];
           _filteredCharacters = [];
