@@ -6,6 +6,10 @@ Uma aplicação mobile desenvolvida em Flutter que consome a API do Rick and Mor
 
 Este aplicativo permite aos usuários explorar o universo de Rick and Morty através de uma interface intuitiva e responsiva. O app consome a [Rick and Morty API](https://rickandmortyapi.com/) para fornecer informações detalhadas sobre os personagens da série.
 
+### 🎨 Inspiração do Layout
+
+O design e layout da aplicação foram inspirados na imagem de referência disponível em `assets/imgs/image_inspiracao.png`. Esta imagem serviu como base para a criação da interface do usuário.
+
 ## 🚀 Tecnologias Utilizadas
 
 - **Flutter**: 3.29.2 (Stable Channel) 
