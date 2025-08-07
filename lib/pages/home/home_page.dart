@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/pages/home/home_controller.dart';
-import 'package:ricky_and_martie_app/widgets/character_card.dart';
 import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
 import 'package:ricky_and_martie_app/widgets/empty_state_widget.dart';
 import 'package:ricky_and_martie_app/widgets/character_list_shimmer.dart';
-import 'package:ricky_and_martie_app/widgets/loading_more_widget.dart';
 import 'package:ricky_and_martie_app/widgets/responsive_character_list.dart';
+import 'package:ricky_and_martie_app/widgets/search_field_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,32 +17,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeController _controller;
-  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _controller = HomeController(context.read());
-    _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
     _controller.loadCharacters();
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
     _controller.dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
-      if (_controller.hasMorePages && !_controller.isLoadingMore) {
-        _controller.loadMoreCharacters();
-      }
-    }
   }
 
   @override
@@ -56,23 +41,9 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              constraints: BoxConstraints(
-                maxWidth: 600,
-              ),
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                onChanged: _controller.updateSearchQuery,
-                decoration: InputDecoration(
-                  hintText: 'Buscar...',
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey[100],
-                ),
-              ),
+            SearchFieldWidget(
+              onChanged: _controller.updateSearchQuery,
+              onClear: () => _controller.updateSearchQuery(''),
             ),
             Expanded(
               child: ListenableBuilder(
@@ -92,9 +63,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   if (_controller.characters.isEmpty) {
-                    // Se está em modo de busca e não encontrou nada
-                    if (_controller.isSearchMode &&
-                        _controller.searchQuery.isNotEmpty) {
+                    if (_controller.emptyState) {
                       return EmptyStateWidget(
                         icon: Icons.search_off,
                         title: 'Nenhum personagem encontrado',
@@ -102,7 +71,6 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
 
-                    // Se não está em busca e não há personagens
                     return EmptyStateWidget(
                       icon: Icons.people_outline,
                       title: 'Nenhum personagem encontrado',
@@ -113,7 +81,7 @@ class _HomePageState extends State<HomePage> {
 
                   return ResponsiveCharacterList(
                     characters: _controller.characters,
-                    scrollController: _scrollController,
+                    scrollController: _controller.scrollController,
                     hasMorePages: _controller.hasMorePages,
                   );
                 },

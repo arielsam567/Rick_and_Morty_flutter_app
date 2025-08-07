@@ -6,7 +6,10 @@ import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
 class HomeController extends ChangeNotifier {
   final RickAndMortyRepository _repository;
 
-  HomeController(this._repository);
+  HomeController(this._repository) {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+  }
 
   List<Character> _allCharacters = [];
   List<Character> _filteredCharacters = [];
@@ -19,6 +22,7 @@ class HomeController extends ChangeNotifier {
   String? _nextPageUrl;
   Timer? _debounceTimer;
   bool _isSearchMode = false;
+  late ScrollController _scrollController;
 
   List<Character> get characters => _filteredCharacters;
   bool get isLoading => _isLoading;
@@ -27,6 +31,17 @@ class HomeController extends ChangeNotifier {
   String get searchQuery => _searchQuery;
   bool get hasMorePages => _hasMorePages;
   bool get isSearchMode => _isSearchMode;
+  bool get emptyState => isSearchMode && searchQuery.isNotEmpty;
+  ScrollController get scrollController => _scrollController;
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      if (_hasMorePages && !_isLoadingMore) {
+        loadMoreCharacters();
+      }
+    }
+  }
 
   Future<void> loadCharacters({bool refresh = false}) async {
     if (refresh) {
@@ -189,6 +204,8 @@ class HomeController extends ChangeNotifier {
   @override
   void dispose() {
     _debounceTimer?.cancel();
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
     super.dispose();
   }
 }
