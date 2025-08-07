@@ -15,43 +15,59 @@ class FeaturedChaptersWidget extends StatelessWidget {
       children: [
         const SectionHeader(title: 'FEATURED CHAPTERS'),
         const SizedBox(height: 16),
-        ...episodes.take(5).map((episode) => _buildChapterItem(episode)),
+        // ...episodes.map((episode) => _buildChapterItem(episode)),
+        ListView.builder(
+          itemCount: episodes.length,
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) => _buildChapterItem(episodes[index]),
+        ),
       ],
     );
   }
 
   Widget _buildChapterItem(String episodeUrl) {
-    // Extrair informações do episódio da URL
     final episodeInfo = _extractEpisodeInfo(episodeUrl);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        children: [
-          Text(
-            episodeInfo['code'] ?? '',
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              episodeInfo['name'] ?? 'Unknown Episode',
+     return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+      child: Container(
+        constraints: const BoxConstraints(
+          maxWidth: 100,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.3),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(
+          children: [
+            Text(
+              episodeInfo['code'] ?? '',
               style: const TextStyle(
+                fontWeight: FontWeight.w700,
                 color: Colors.grey,
               ),
             ),
-          ),
-          Text(
-            episodeInfo['date'] ?? '',
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 12,
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                episodeInfo['name'] ?? 'Unknown Episode',
+                style: const TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
             ),
-          ),
-        ],
+            Text(
+              episodeInfo['date'] ?? '',
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
