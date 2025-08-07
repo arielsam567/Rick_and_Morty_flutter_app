@@ -26,6 +26,11 @@ O design e layout da aplicação foram inspirados na imagem de referência dispo
 
 ## 📋 Requisitos Funcionais
 
+- **Consumo da API Rick and Morty**
+- **Exibir uma lista de personagens com seus respectivos nomes e imagens**
+- **Exibir uma página de detalhes contendo: name, status, species**
+
+
 ### ✅ Funcionalidades Implementadas
 
 1. **Consumo da API Rick and Morty**
@@ -48,9 +53,11 @@ O design e layout da aplicação foram inspirados na imagem de referência dispo
  
 
 ### Camadas da Arquitetura:
+
+> **Nota:** Este projeto utiliza **Repository Pattern com MVC/MVP**, não Clean Architecture completa, por ser um aplicativo simples. Esta abordagem é adequada para projetos menores e oferece boa organização sem complexidade desnecessária.
+
 - **Presentation Layer**: Pages, Controllers, Widgets
-- **Domain Layer**: Use Cases, Entities
-- **Data Layer**: Repositories, Services
+- **Data Layer**: Repositories, Services, Models
 
 
 ## 🛠️ Como Executar
