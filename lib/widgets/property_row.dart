@@ -14,8 +14,10 @@ class PropertyRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 48),
+      padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16 : 48),
       child: Row(
         children: [
           Container(

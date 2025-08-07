@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  final double dividerWidth = 100;
   final double spacing = 10;
 
   const SectionHeader({
@@ -12,6 +11,8 @@ class SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double dividerWidth = screenWidth < 400 ? 50 : 100;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
