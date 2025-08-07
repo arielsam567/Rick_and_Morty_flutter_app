@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ricky_and_martie_app/core/http_client_abstract.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ricky_and_martie_app/core/storage_impl.dart';
 import 'dart:convert';
 
 class HttpClient implements HttpClientBase {
@@ -44,8 +44,8 @@ class HttpClient implements HttpClientBase {
 
   Future<HttpResponse?> _getFromCache(String cacheKey) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final cachedData = prefs.getString('cache_$cacheKey');
+      final storage = await SharedPreferencesStorage.getInstance();
+      final cachedData = await storage.getString('cache_$cacheKey');
 
       if (cachedData != null) {
         final decodedData = json.decode(cachedData);
@@ -63,14 +63,14 @@ class HttpClient implements HttpClientBase {
 
   Future<void> _saveToCache(String cacheKey, HttpResponse response) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
+      final storage = await SharedPreferencesStorage.getInstance();
       final cacheData = {
         'data': response.data,
         'statusCode': response.statusCode,
         'timestamp': DateTime.now().millisecondsSinceEpoch,
       };
 
-      await prefs.setString('cache_$cacheKey', json.encode(cacheData));
+      await storage.setString('cache_$cacheKey', json.encode(cacheData));
     } catch (e) {
       debugPrint('Erro ao salvar cache: $e');
     }
