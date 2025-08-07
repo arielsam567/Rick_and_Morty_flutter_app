@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ricky_and_martie_app/core/storage/storage_abstract.dart';
+import 'package:ricky_and_martie_app/infrastructure/storage/storage_abstract.dart';
 
 class LocalStorageService implements StorageService {
   static LocalStorageService? _instance;

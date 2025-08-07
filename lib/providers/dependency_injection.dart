@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
-import 'package:ricky_and_martie_app/core/http/dio_config.dart';
-import 'package:ricky_and_martie_app/core/http/http_client_abstract.dart';
-import 'package:ricky_and_martie_app/core/http/http_client_impl.dart';
+import 'package:ricky_and_martie_app/infrastructure/http/dio_config.dart';
+import 'package:ricky_and_martie_app/infrastructure/http/http_client_abstract.dart';
+import 'package:ricky_and_martie_app/infrastructure/http/http_client_impl.dart';
 import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
 import 'package:ricky_and_martie_app/pages/details/details_controller.dart';
 import 'package:ricky_and_martie_app/pages/home/home_controller.dart';

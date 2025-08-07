@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
-import 'package:ricky_and_martie_app/core/http/http_client_abstract.dart';
+import 'package:ricky_and_martie_app/infrastructure/http/http_client_abstract.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/models/paginated_response.dart';
 import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';

@@ -145,9 +145,10 @@ lib/
 │   ├── assets.dart             # Configuração de assets
 │   ├── strings.dart            # Strings da aplicação
 │   └── themes/                 # Temas e cores
-├── core/                       # Camada de domínio
+├── infrastructure/             # Camada de infraestrutura
 │   ├── http/                   # Camada de comunicação com a API
 │   ├── storage/                # Armazenamento local
+│   └── routes.dart             # Configuração de rotas
 ├── models/                     # Modelos de dados
 │   ├── character.dart          # Modelo de personagem
 │   └── paginated_response.dart # Resposta paginada
@@ -158,8 +159,6 @@ lib/
 │   └── dependency_injection.dart
 ├── repositories/               # Repositórios de dados
 │   └── rickandmorty_repository.dart
-├── services/                   # Serviços
-│   └── routes.dart             # Configuração de rotas
 └── widgets/                    # Widgets reutilizáveis
     ├── character_card.dart     # Card de personagem
     ├── character_image_widget.dart

@@ -6,7 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:ricky_and_martie_app/core/http/http_client_abstract.dart'
+import 'package:ricky_and_martie_app/infrastructure/http/http_client_abstract.dart'
     as _i2;
 
 // ignore_for_file: type=lint

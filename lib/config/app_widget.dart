@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/config/themes/custom_themes.dart';
 import 'package:ricky_and_martie_app/providers/dependency_injection.dart';
-import 'package:ricky_and_martie_app/services/routes.dart';
+import 'package:ricky_and_martie_app/infrastructure/routes/routes.dart';
 import 'package:provider/single_child_widget.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
