@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class PropertyRow extends StatelessWidget {
   final String label;
   final String value;
+  final bool showArrow;
 
   const PropertyRow({
     required this.label,
     required this.value,
+    this.showArrow = false,
     super.key,
   });
 
@@ -24,30 +26,49 @@ class PropertyRow extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF9E9E9E),
+                color: Colors.grey[600],
               ),
             ),
           ),
           const SizedBox(width: 12),
+//envolve num expanded
           Expanded(
+//envolve num container com padding de 12 na horizontal e 8 na vertical
             child: Container(
-              width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(6),
               ),
-              alignment: Alignment.center,
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[500],
-                ),
+              child: Row(
+                mainAxisAlignment: showArrow
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.center,
+                children: [
+                  if (showArrow) ...[
+                    const SizedBox(width: 12),
+                  ],
+                  Center(
+                    child: Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[500],
+                      ),
+                    ),
+                  ),
+                  if (showArrow) ...[
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.grey[600],
+                      size: 20,
+                    ),
+                  ]
+                ],
               ),
             ),
           ),

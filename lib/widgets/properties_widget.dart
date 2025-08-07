@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'section_header.dart';
-import 'property_row.dart';
+import 'package:ricky_and_martie_app/widgets/section_header.dart';
+import 'package:ricky_and_martie_app/widgets/property_row.dart';
 
 class PropertiesWidget extends StatelessWidget {
   final String gender;
