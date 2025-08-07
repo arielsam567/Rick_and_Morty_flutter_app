@@ -20,16 +20,9 @@ O design e layout da aplicação foram inspirados na imagem de referência abaix
 
 A aplicação foi desenvolvida seguindo a inspiração acima e resultou nas seguintes telas:
 
-<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-  <div style="text-align: center;">
-    <h4>🏠 Tela Inicial (Home)</h4>
-    <img src="assets/imgs/resultado_home.png" alt="Tela Inicial" style="max-width: 300px; height: auto;">
-  </div>
-  <div style="text-align: center;">
-    <h4>👤 Tela de Detalhes</h4>
-    <img src="assets/imgs/resultado_details.png" alt="Tela de Detalhes" style="max-width: 300px; height: auto;">
-  </div>
-</div>
+| 🏠 Tela Inicial (Home) | 👤 Tela de Detalhes |
+|:---:|:---:|
+| ![Tela Inicial](assets/imgs/resultado_home.png) | ![Tela de Detalhes](assets/imgs/resultado_details.png) |
 
 ## 🚀 Tecnologias Utilizadas
 
