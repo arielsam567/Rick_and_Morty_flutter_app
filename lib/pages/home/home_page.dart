@@ -7,6 +7,7 @@ import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
 import 'package:ricky_and_martie_app/widgets/empty_state_widget.dart';
 import 'package:ricky_and_martie_app/widgets/character_list_shimmer.dart';
 import 'package:ricky_and_martie_app/widgets/loading_more_widget.dart';
+import 'package:ricky_and_martie_app/widgets/responsive_character_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,79 +52,75 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(Strings.appName),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              onChanged: _controller.updateSearchQuery,
-              decoration: InputDecoration(
-                hintText: 'Buscar...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              constraints: BoxConstraints(
+                maxWidth: 600,
+              ),
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                onChanged: _controller.updateSearchQuery,
+                decoration: InputDecoration(
+                  hintText: 'Buscar...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[100],
                 ),
-                filled: true,
-                fillColor: Colors.grey[100],
               ),
             ),
-          ),
-          Expanded(
-            child: ListenableBuilder(
-              listenable: _controller,
-              builder: (context, child) {
-                if (_controller.isLoading) {
-                  return const CharacterListShimmer();
-                }
+            Expanded(
+              child: ListenableBuilder(
+                listenable: _controller,
+                builder: (context, child) {
+                  if (_controller.isLoading) {
+                    return const CharacterListShimmer();
+                  }
 
-                if (_controller.errorMessage != null) {
-                  return ErrorMessageWidget(
-                    icon: Icons.error_outline,
-                    title: 'Erro ao carregar personagens',
-                    message: _controller.errorMessage,
-                    onRetry: _controller.retry,
-                  );
-                }
-
-                if (_controller.characters.isEmpty) {
-                  // Se está em modo de busca e não encontrou nada
-                  if (_controller.isSearchMode &&
-                      _controller.searchQuery.isNotEmpty) {
-                    return EmptyStateWidget(
-                      icon: Icons.search_off,
-                      title: 'Nenhum personagem encontrado',
-                      subtitle:
-                          'Tente buscar por outro nome ou verifique a ortografia.',
+                  if (_controller.errorMessage != null) {
+                    return ErrorMessageWidget(
+                      icon: Icons.error_outline,
+                      title: 'Erro ao carregar personagens',
+                      message: _controller.errorMessage,
+                      onRetry: _controller.retry,
                     );
                   }
 
-                  // Se não está em busca e não há personagens
-                  return EmptyStateWidget(
-                    icon: Icons.people_outline,
-                    title: 'Nenhum personagem encontrado',
-                    subtitle:
-                        'Não foi possível carregar os personagens no momento.',
-                  );
-                }
-
-                return ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: _controller.characters.length +
-                      (_controller.hasMorePages ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    if (index == _controller.characters.length) {
-                      return const LoadingMoreWidget();
+                  if (_controller.characters.isEmpty) {
+                    // Se está em modo de busca e não encontrou nada
+                    if (_controller.isSearchMode &&
+                        _controller.searchQuery.isNotEmpty) {
+                      return EmptyStateWidget(
+                        icon: Icons.search_off,
+                        title: 'Nenhum personagem encontrado',
+                        subtitle: 'Tente buscar por outro nome.',
+                      );
                     }
 
-                    final character = _controller.characters[index];
-                    return CharacterCard(character: character);
-                  },
-                );
-              },
+                    // Se não está em busca e não há personagens
+                    return EmptyStateWidget(
+                      icon: Icons.people_outline,
+                      title: 'Nenhum personagem encontrado',
+                      subtitle:
+                          'Não foi possível carregar os personagens no momento.',
+                    );
+                  }
+
+                  return ResponsiveCharacterList(
+                    characters: _controller.characters,
+                    scrollController: _scrollController,
+                    hasMorePages: _controller.hasMorePages,
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
