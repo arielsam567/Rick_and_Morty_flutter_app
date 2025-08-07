@@ -6,7 +6,6 @@ import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/models/paginated_response.dart';
 import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
 
-// Gerar mocks
 @GenerateMocks([HttpClientBase])
 import 'rickandmorty_repository_test.mocks.dart';
 
@@ -23,7 +22,6 @@ void main() {
     group('getCharacters', () {
       test('should return PaginatedResponse when API call is successful',
           () async {
-        // Arrange
         final mockResponse = {
           'info': {
             'count': 826,
@@ -57,10 +55,8 @@ void main() {
             .thenAnswer(
                 (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-        // Act
         final result = await repository.getCharacters();
 
-        // Assert
         expect(result.isRight(), isTrue);
         result.fold(
           (error) => fail('Should not return error'),
@@ -76,15 +72,12 @@ void main() {
       });
 
       test('should return error message when API call fails', () async {
-        // Arrange
         when(mockHttpClient.get('character', queryParameters: {'page': 1}))
             .thenThrow(
                 HttpException(message: 'Network error', statusCode: 500));
 
-        // Act
         final result = await repository.getCharacters();
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
@@ -95,14 +88,11 @@ void main() {
       });
 
       test('should return 404 error message when no results found', () async {
-        // Arrange
         when(mockHttpClient.get('character', queryParameters: {'page': 999}))
             .thenThrow(HttpException(message: 'Not found', statusCode: 404));
 
-        // Act
         final result = await repository.getCharacters(page: 999);
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
@@ -115,7 +105,6 @@ void main() {
 
     group('getCharacterById', () {
       test('should return Character when API call is successful', () async {
-        // Arrange
         final mockResponse = {
           'id': 1,
           'name': 'Rick Sanchez',
@@ -137,10 +126,8 @@ void main() {
         when(mockHttpClient.get('character/1')).thenAnswer(
             (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-        // Act
         final result = await repository.getCharacterById(1);
 
-        // Assert
         expect(result.isRight(), isTrue);
         result.fold(
           (error) => fail('Should not return error'),
@@ -154,14 +141,11 @@ void main() {
       });
 
       test('should return error message when character not found', () async {
-        // Arrange
         when(mockHttpClient.get('character/999'))
             .thenThrow(HttpException(message: 'Not found', statusCode: 404));
 
-        // Act
         final result = await repository.getCharacterById(999);
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
@@ -175,7 +159,6 @@ void main() {
     group('searchCharactersByName', () {
       test('should return PaginatedResponse when search is successful',
           () async {
-        // Arrange
         final mockResponse = {
           'info': {'count': 1, 'pages': 1, 'next': null, 'prev': null},
           'results': [
@@ -202,10 +185,8 @@ void main() {
             .thenAnswer(
                 (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-        // Act
         final result = await repository.searchCharactersByName('Rick');
 
-        // Assert
         expect(result.isRight(), isTrue);
         result.fold(
           (error) => fail('Should not return error'),
@@ -219,16 +200,12 @@ void main() {
       });
 
       test('should return error message when search fails', () async {
-        // Arrange
         when(mockHttpClient.get('character',
                 queryParameters: {'name': 'InvalidName', 'page': 1}))
             .thenThrow(HttpException(message: 'Not found', statusCode: 404));
 
-        // Act
-        final result =
-            await repository.searchCharactersByName('InvalidName');
+        final result = await repository.searchCharactersByName('InvalidName');
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
@@ -243,7 +220,6 @@ void main() {
       test(
           'should return List<Character> when API call is successful for single ID',
           () async {
-        // Arrange
         final mockResponse = {
           'id': 1,
           'name': 'Rick Sanchez',
@@ -262,10 +238,8 @@ void main() {
         when(mockHttpClient.get('character/1')).thenAnswer(
             (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-        // Act
         final result = await repository.getCharactersByIds([1]);
 
-        // Assert
         expect(result.isRight(), isTrue);
         result.fold(
           (error) => fail('Should not return error'),
@@ -280,7 +254,6 @@ void main() {
       test(
           'should return List<Character> when API call is successful for multiple IDs',
           () async {
-        // Arrange
         final mockResponse = [
           {
             'id': 1,
@@ -315,10 +288,8 @@ void main() {
         when(mockHttpClient.get('character/1,2')).thenAnswer(
             (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-        // Act
         final result = await repository.getCharactersByIds([1, 2]);
 
-        // Assert
         expect(result.isRight(), isTrue);
         result.fold(
           (error) => fail('Should not return error'),
@@ -333,14 +304,11 @@ void main() {
 
       test('should return error message when getCharactersByIds fails',
           () async {
-        // Arrange
         when(mockHttpClient.get('character/999'))
             .thenThrow(HttpException(message: 'Not found', statusCode: 404));
 
-        // Act
         final result = await repository.getCharactersByIds([999]);
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
@@ -353,14 +321,11 @@ void main() {
 
     group('Error handling', () {
       test('should handle timeout errors correctly', () async {
-        // Arrange
         when(mockHttpClient.get('character', queryParameters: {'page': 1}))
             .thenThrow(HttpException(message: 'Timeout', statusCode: 408));
 
-        // Act
         final result = await repository.getCharacters();
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
@@ -371,14 +336,11 @@ void main() {
       });
 
       test('should handle generic errors correctly', () async {
-        // Arrange
         when(mockHttpClient.get('character', queryParameters: {'page': 1}))
             .thenThrow(Exception('Generic error'));
 
-        // Act
         final result = await repository.getCharacters();
 
-        // Assert
         expect(result.isLeft(), isTrue);
         result.fold(
           (error) {
