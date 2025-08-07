@@ -149,8 +149,7 @@ class HomeController extends ChangeNotifier {
       _nextPageUrl = null;
       loadCharacters();
     } else {
-      // Debounce de 500ms para evitar muitas requisições
-      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+       _debounceTimer = Timer(const Duration(milliseconds: 500), () {
         searchCharactersByName(_searchQuery);
       });
     }
