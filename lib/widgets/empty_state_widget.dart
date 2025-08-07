@@ -8,12 +8,11 @@ class EmptyStateWidget extends StatelessWidget {
   final double? iconSize;
 
   const EmptyStateWidget({
-    super.key,
-    required this.icon,
-    required this.title,
+    required this.icon, required this.title, 
     this.subtitle,
     this.iconColor,
     this.iconSize,
+    super.key,
   });
 
   @override

@@ -26,12 +26,12 @@ class RetryButton extends StatelessWidget {
         color: MyColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: MyColors.error.withOpacity(0.3),
+          color: MyColors.error.withValues(alpha:0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha:0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),

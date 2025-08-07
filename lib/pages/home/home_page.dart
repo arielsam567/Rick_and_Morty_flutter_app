@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/pages/home/home_controller.dart';
