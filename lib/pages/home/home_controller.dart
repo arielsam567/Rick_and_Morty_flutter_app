@@ -126,10 +126,8 @@ class HomeController extends ChangeNotifier {
     }
 
     if (_isSearchMode) {
-      // Em modo de busca, carrega mais itens da busca
       await searchCharactersByName(_searchQuery, page: _currentPage);
     } else {
-      // Em modo normal, carrega mais itens da lista geral
       await loadCharacters();
     }
   }
@@ -137,10 +135,8 @@ class HomeController extends ChangeNotifier {
   void updateSearchQuery(String query) {
     _searchQuery = query;
 
-    // Cancelar timer anterior
     _debounceTimer?.cancel();
 
-    // Reset paginação quando a busca muda
     if (_searchQuery.isEmpty) {
       _isSearchMode = false;
       _currentPage = 1;
@@ -149,7 +145,7 @@ class HomeController extends ChangeNotifier {
       _nextPageUrl = null;
       loadCharacters();
     } else {
-       _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      _debounceTimer = Timer(const Duration(milliseconds: 500), () {
         searchCharactersByName(_searchQuery);
       });
     }

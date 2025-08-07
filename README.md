@@ -2,6 +2,10 @@
 
 Uma aplicação mobile desenvolvida em Flutter que consome a API do Rick and Morty para exibir informações sobre os personagens da série.
 
+## 🌐 Acesso Online
+
+Você pode acessar a versão web da aplicação em: **[https://ricky-e-marty-app.web.app](https://ricky-e-marty-app.web.app)**
+
 ## 📱 Sobre o App
 
 Este aplicativo permite aos usuários explorar o universo de Rick and Morty através de uma interface intuitiva e responsiva. O app consome a [Rick and Morty API](https://rickandmortyapi.com/) para fornecer informações detalhadas sobre os personagens da série.
