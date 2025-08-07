@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  final double dividerWidth;
-  final double spacing;
-  final TextStyle? titleStyle;
+  final double dividerWidth = 100;
+  final double spacing = 10;
 
   const SectionHeader({
     required this.title,
-    this.dividerWidth = 100,
-    this.spacing = 10,
-    this.titleStyle,
     super.key,
   });
 
@@ -26,12 +22,11 @@ class SectionHeader extends StatelessWidget {
         SizedBox(width: spacing),
         Text(
           title,
-          style: titleStyle ??
-              const TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-                fontSize: 15,
-              ),
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+            fontSize: 15,
+          ),
         ),
         SizedBox(width: spacing),
         SizedBox(

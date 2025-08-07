@@ -34,9 +34,7 @@ class PropertyRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-//envolve num expanded
           Expanded(
-//envolve num container com padding de 12 na horizontal e 8 na vertical
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(

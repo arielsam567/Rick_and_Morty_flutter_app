@@ -6,8 +6,8 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Log do ambiente atual para debug
-  print('🔧 Ambiente atual: ${Environments.environment}');
-  print('🔧 URL base configurada: ${Environments.baseUrl}');
+  debugPrint('🔧 Ambiente atual: ${Environments.environment}');
+  debugPrint('🔧 URL base configurada: ${Environments.baseUrl}');
 
   runApp(const AppWidget());
 }

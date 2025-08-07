@@ -4,14 +4,12 @@ import 'package:ricky_and_martie_app/config/themes/colors.dart';
 class RetryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
-  final IconData? icon;
   final double? width;
   final double? height;
 
   const RetryButton({
     required this.onPressed,
     this.text = 'Tentar Novamente',
-    this.icon,
     this.width,
     this.height,
     super.key,
@@ -26,12 +24,12 @@ class RetryButton extends StatelessWidget {
         color: MyColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: MyColors.error.withValues(alpha:0.3),
+          color: MyColors.error.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha:0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -52,7 +50,7 @@ class RetryButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  icon ?? Icons.refresh_rounded,
+                  Icons.refresh_rounded,
                   color: MyColors.error,
                   size: 18,
                 ),

@@ -17,7 +17,7 @@ class CharacterCardShimmer extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            // Shimmer para a imagem
+            // imagem
             Shimmer.fromColors(
               baseColor: Colors.grey[300]!,
               highlightColor: Colors.grey[100]!,
@@ -36,7 +36,7 @@ class CharacterCardShimmer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Shimmer para o nome
+                  //   nome
                   Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
@@ -50,7 +50,7 @@ class CharacterCardShimmer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  // Shimmer para a espécie
+                  //  espécie
                   Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
@@ -64,7 +64,7 @@ class CharacterCardShimmer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // Shimmer para status e gênero
+                  //   status e gênero
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -81,7 +81,7 @@ class CharacterCardShimmer extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Shimmer para o gênero
+                      //   gênero
                       Shimmer.fromColors(
                         baseColor: Colors.grey[300]!,
                         highlightColor: Colors.grey[100]!,
@@ -99,7 +99,7 @@ class CharacterCardShimmer extends StatelessWidget {
                 ],
               ),
             ),
-            // Shimmer para o ícone de seta
+            // ícone de seta
             Shimmer.fromColors(
               baseColor: Colors.grey[300]!,
               highlightColor: Colors.grey[100]!,

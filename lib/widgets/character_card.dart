@@ -74,7 +74,7 @@ class CharacterCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //name
+                    // Name
                     Text(
                       character.name,
                       style: const TextStyle(
@@ -85,7 +85,7 @@ class CharacterCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    //species
+                    //Species
                     Text(
                       character.species.toUpperCase(),
                       style: const TextStyle(
@@ -95,13 +95,13 @@ class CharacterCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    // life status and gender
+                    // Life status and gender
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Status com ponto verde
+                        // Life status
                         StatusIndicator(status: character.status),
-                        // Gênero com símbolo
+                        // Gender icon
                         Padding(
                           padding: EdgeInsets.only(right: 16),
                           child: GenderIndicator(gender: character.gender),

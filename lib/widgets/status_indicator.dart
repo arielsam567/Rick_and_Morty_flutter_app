@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 
 class StatusIndicator extends StatelessWidget {
   final String status;
-  final double dotSize;
-  final TextStyle? textStyle;
+  final double dotSize = 6;
 
   const StatusIndicator({
     required this.status,
-    this.dotSize = 8.0,
-    this.textStyle,
     super.key,
   });
 
@@ -39,11 +36,10 @@ class StatusIndicator extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           status,
-          style: textStyle ??
-              const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              ),
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black87,
+          ),
         ),
       ],
     );
