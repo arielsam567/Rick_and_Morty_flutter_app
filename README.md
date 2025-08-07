@@ -20,9 +20,9 @@ O design e layout da aplicação foram inspirados na imagem de referência abaix
 
 A aplicação foi desenvolvida seguindo a inspiração acima e resultou nas seguintes telas:
 
-| 🏠 Tela Inicial (Home) | 👤 Tela de Detalhes |
-|:---:|:---:|
-| ![Tela Inicial](assets/imgs/resultado_home.png) | ![Tela de Detalhes](assets/imgs/resultado_details.png) |
+| 🏠 Tela Inicial (Home) | 👤 Tela de Detalhes | 👤 Tela de Detalhes 2 |
+|:---:|:---:|:---:|
+| ![Tela Inicial](assets/imgs/resultado_home.png) | ![Tela de Detalhes](assets/imgs/resultado_details.png) | ![Tela de Detalhes 2](assets/imgs/resultado_details2.png) |
 
 ## 🚀 Tecnologias Utilizadas
 
