@@ -23,8 +23,8 @@ void main() {
     controller.dispose();
   });
 
-  group('HomeController - Estados Iniciais', () {
-    test('deve inicializar com estados corretos', () {
+  group('HomeController - Initial States', () {
+    test('should initialize with correct states', () {
       expect(controller.characters, isEmpty);
       expect(controller.isLoading, isFalse);
       expect(controller.isLoadingMore, isFalse);
@@ -37,7 +37,7 @@ void main() {
   });
 
   group('HomeController - loadCharacters', () {
-    test('deve carregar personagens com sucesso', () async {
+    test('should load characters successfully', () async {
       final characters = [
         Character(
           id: 1,
@@ -71,7 +71,7 @@ void main() {
       expect(controller.hasMorePages, isFalse);
     });
 
-    test('deve lidar com erro ao carregar personagens', () async {
+    test('should handle error when loading characters', () async {
       when(mockRepository.getCharacters())
           .thenAnswer((_) async => const Left('Erro de conexão'));
 
@@ -82,7 +82,7 @@ void main() {
       expect(controller.errorMessage, equals('Erro de conexão'));
     });
 
-    test('deve carregar mais personagens na paginação', () async {
+    test('should load more characters in pagination', () async {
       final characters1 = [
         Character(
           id: 1,
@@ -139,7 +139,7 @@ void main() {
       expect(controller.hasMorePages, isFalse);
     });
 
-    test('deve fazer refresh corretamente', () async {
+    test('should refresh correctly', () async {
       final characters = [
         Character(
           id: 1,
@@ -173,7 +173,7 @@ void main() {
   });
 
   group('HomeController - searchCharactersByName', () {
-    test('deve buscar personagens por nome com sucesso', () async {
+    test('should search characters by name successfully', () async {
       final characters = [
         Character(
           id: 1,
@@ -206,7 +206,7 @@ void main() {
       expect(controller.isLoading, isFalse);
     });
 
-    test('deve lidar com nenhum resultado encontrado', () async {
+    test('should handle no results found', () async {
       when(mockRepository.searchCharactersByName('Inexistente'))
           .thenAnswer((_) async => const Left('Nenhum resultado encontrado'));
 
@@ -218,7 +218,7 @@ void main() {
       expect(controller.errorMessage, isNull);
     });
 
-    test('deve lidar com erro na busca', () async {
+    test('should handle search error', () async {
       when(mockRepository.searchCharactersByName('Rick'))
           .thenAnswer((_) async => const Left('Erro de busca'));
 
@@ -230,7 +230,7 @@ void main() {
   });
 
   group('HomeController - updateSearchQuery', () {
-    test('deve limpar busca quando query estiver vazia', () async {
+    test('should clear search when query is empty', () async {
       final characters = [
         Character(
           id: 1,
@@ -264,7 +264,7 @@ void main() {
       expect(controller.isSearchMode, isFalse);
     });
 
-    test('deve fazer debounce na busca', () async {
+    test('should debounce search', () async {
       when(mockRepository.searchCharactersByName('Rick'))
           .thenAnswer((_) async => Right(PaginatedResponse(
                 info: Info(count: 1, pages: 1),
@@ -274,7 +274,7 @@ void main() {
       controller.updateSearchQuery('Rick');
       expect(controller.searchQuery, equals('Rick'));
 
-      // Aguarda o debounce
+      // Wait for debounce
       await Future.delayed(const Duration(milliseconds: 600));
 
       verify(mockRepository.searchCharactersByName('Rick')).called(1);
@@ -282,7 +282,7 @@ void main() {
   });
 
   group('HomeController - retry', () {
-    test('deve tentar novamente em modo de busca', () async {
+    test('should retry in search mode', () async {
       controller.updateSearchQuery('Rick');
 
       when(mockRepository.searchCharactersByName('Rick'))
@@ -298,7 +298,7 @@ void main() {
           .called(greaterThan(1));
     });
 
-    test('deve tentar novamente em modo normal', () async {
+    test('should retry in normal mode', () async {
       when(mockRepository.getCharacters())
           .thenAnswer((_) async => Right(PaginatedResponse(
                 info: Info(count: 1, pages: 1),
@@ -311,18 +311,18 @@ void main() {
     });
   });
 
-  group('HomeController - Filtros', () {
-    test('deve filtrar personagens por nome', () {
-      // Simula carregamento de personagens
+  group('HomeController - Filters', () {
+    test('should filter characters by name', () {
+      // Simulate character loading
       controller.updateSearchQuery('Rick');
 
-      // Aqui você precisaria simular o estado interno, mas o teste demonstra a lógica
+      // Here you would need to simulate internal state, but the test demonstrates the logic
       expect(controller.searchQuery, equals('Rick'));
     });
   });
 
-  group('HomeController - Estados de Loading', () {
-    test('deve gerenciar estados de loading corretamente', () async {
+  group('HomeController - Loading States', () {
+    test('should manage loading states correctly', () async {
       when(mockRepository.getCharacters()).thenAnswer((_) async {
         await Future.delayed(const Duration(milliseconds: 100));
         return Right(PaginatedResponse(
