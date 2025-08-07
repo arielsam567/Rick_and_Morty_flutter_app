@@ -179,11 +179,36 @@ lib/
 - **dartz**: ^0.10.1 - Programação funcional 
 - **flutter_launcher_icons**: ^0.14.1 - Ícones do aplicativo
 
+## 🧪 Testes
+
+Implementou-se testes neste projeto, com o objetivo de demonstrar o conhecimento em diferentes tipos de testes no Flutter. Para mais detalhes sobre os testes implementados, consulte o arquivo **[TESTES_IMPLEMENTADOS.md](TESTES_IMPLEMENTADOS.md)**.
+
+### 📊 Cobertura de Testes
+
+- **Testes de Modelo**: 5 testes - Validação de JSON, status de personagens, cores de status
+- **Testes de Widget**: 5 testes - Renderização, indicadores, navegação, imagens
+- **Testes de Controller**: 12 testes - Carregamento de dados, paginação, estados de UI
+- **Testes de Repositório**: 14 testes - Chamadas da API, parsing de JSON, tratamento de erros
+
+### 🚀 Executando os Testes
+
+```bash
+# Executar todos os testes
+flutter test
+
+# Executar testes específicos
+flutter test test/models/
+flutter test test/widgets/
+flutter test test/controllers/
+flutter test test/repositories/
+
+# Executar com cobertura
+flutter test --coverage
+```
+
 ## 🔗 API Utilizada
 
 - **Rick and Morty API**: https://rickandmortyapi.com/
 - Documentação: https://rickandmortyapi.com/documentation
 
- 
-
- 
+  
