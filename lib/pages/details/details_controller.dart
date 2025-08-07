@@ -15,9 +15,15 @@ class DetailsController extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> loadCharacter(int id) async {
+  Future<void> loadCharacter(int id, {Character? character}) async {
     _isLoading = true;
     _error = null;
+    if (character != null) {
+      _character = character;
+      _isLoading = false;
+      notifyListeners();
+      return;
+    }
     notifyListeners();
 
     final result = await _repository.getCharacterById(id);

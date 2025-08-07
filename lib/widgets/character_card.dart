@@ -25,7 +25,8 @@ class CharacterCard extends StatelessWidget {
       ),
       color: const Color(0xffe0d5c1), // Cor bege clara como na imagem
       child: InkWell(
-        onTap: () => context.push('/details/${character.id}', extra: character),
+        onTap: () =>
+            context.push('/details/${character.id}99999', extra: character),
         borderRadius: BorderRadius.circular(8.0),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -98,7 +99,7 @@ class CharacterCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Life status
-                        StatusIndicator(status: character.status),
+                        StatusIndicator(character: character),
                         // Gender icon
                         Padding(
                           padding: EdgeInsets.only(right: 16),

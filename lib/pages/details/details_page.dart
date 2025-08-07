@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/widgets/properties_widget.dart';
 import 'package:ricky_and_martie_app/widgets/whereabouts_widget.dart';
 import 'package:ricky_and_martie_app/widgets/featured_chapters_widget.dart';
@@ -10,9 +11,11 @@ import 'package:ricky_and_martie_app/pages/details/details_controller.dart';
 
 class DetailsPage extends StatefulWidget {
   final int characterId;
+  final Character? character;
 
   const DetailsPage({
     required this.characterId,
+    this.character,
     super.key,
   });
 
@@ -25,7 +28,10 @@ class _DetailsPageState extends State<DetailsPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<DetailsController>().loadCharacter(widget.characterId);
+      context.read<DetailsController>().loadCharacter(
+            widget.characterId,
+            character: widget.character,
+          );
     });
   }
 
@@ -67,8 +73,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
                     // Imagem do personagem com status
                     CharacterImageWidget(
-                      imageUrl: character.image,
-                      status: character.status,
+                      character: character,
                     ),
                     const SizedBox(height: 16),
 
@@ -88,7 +93,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     PropertiesWidget(
                       gender: character.gender,
                       species: character.species,
-                      status: character.status,
+                      status: character.status.name,
                     ),
                     const SizedBox(height: 24),
 

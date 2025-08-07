@@ -1,7 +1,17 @@
+// ignore_for_file: constant_identifier_names
+
+import 'package:flutter/material.dart';
+
+enum LifeStatus {
+  Alive,
+  Dead,
+  unknown,
+}
+
 class Character {
   final int id;
   final String name;
-  final String status;
+  final LifeStatus status;
   final String species;
   final String type;
   final String gender;
@@ -28,10 +38,11 @@ class Character {
   });
 
   factory Character.fromJson(Map<String, dynamic> json) {
+    
     return Character(
       id: json['id'],
       name: json['name'],
-      status: json['status'],
+      status: LifeStatus.values.byName(json['status']),
       species: json['species'],
       type: json['type'],
       gender: json['gender'],
@@ -42,5 +53,16 @@ class Character {
       origin: json['origin']['name'] ?? 'Unknown',
       location: json['location']['name'] ?? 'Unknown',
     );
+  }
+
+  Color getStatusColor() {
+    switch (status) {
+      case LifeStatus.Alive:
+        return Colors.green;
+      case LifeStatus.Dead:
+        return Colors.red;
+      case LifeStatus.unknown:
+        return Colors.grey;
+    }
   }
 }

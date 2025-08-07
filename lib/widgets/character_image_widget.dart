@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CharacterImageWidget extends StatelessWidget {
-  final String imageUrl;
-  final String status;
+  final Character character;
   final double size;
 
   const CharacterImageWidget({
-    required this.imageUrl,
-    required this.status,
+    required this.character,
     this.size = 180.0,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDead = status.toLowerCase() == 'dead';
-    final borderColor = isDead ? Colors.red : Colors.green;
-
     return SizedBox(
       height: size + 20,
       child: Stack(
@@ -31,13 +27,13 @@ class CharacterImageWidget extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: borderColor,
+                color: character.getStatusColor(),
                 width: 3,
               ),
             ),
             child: ClipOval(
               child: CachedNetworkImage(
-                imageUrl: imageUrl,
+                imageUrl: character.image,
                 fit: BoxFit.cover,
                 progressIndicatorBuilder: (context, url, progress) {
                   return Shimmer.fromColors(
@@ -71,11 +67,11 @@ class CharacterImageWidget extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: borderColor,
+                color: character.getStatusColor(),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                status.toUpperCase(),
+                character.status.name.toUpperCase(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
