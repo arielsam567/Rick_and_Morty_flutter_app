@@ -33,27 +33,63 @@ class ResponsiveCharacterList extends StatelessWidget {
   }
 
   Widget _buildGridView(BuildContext context, BoxConstraints constraints) {
-    // Calcula quantas colunas cabem na tela
-    final crossAxisCount =
-        (constraints.maxWidth / 358).floor(); // 350 + 8 spacing
+    final cardWidth = 350.0;
+    final spacing = 8.0;
+    final availableWidth = constraints.maxWidth - (spacing * 2);
+    final cardsPerRow = ((availableWidth + spacing) / (cardWidth + spacing))
+        .floor()
+        .clamp(1, 10);
 
-    return GridView.builder(
+    // Calcula quantas linhas teremos
+    final totalItems = characters.length + (hasMorePages ? 1 : 0);
+    final rowCount = (totalItems / cardsPerRow).ceil();
+
+    return ListView.builder(
       controller: scrollController,
       padding: const EdgeInsets.all(8.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        childAspectRatio: MediaQuery.of(context).size.width / 358,
-        crossAxisSpacing: 8.0,
-        mainAxisSpacing: 8.0,
-      ),
-      itemCount: characters.length + (hasMorePages ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index == characters.length) {
-          return const LoadingMoreWidget();
+      itemCount: rowCount,
+      itemBuilder: (context, rowIndex) {
+        final startIndex = rowIndex * cardsPerRow;
+        final endIndex = (startIndex + cardsPerRow).clamp(0, totalItems);
+
+        final rowItems = <Widget>[];
+
+        for (int i = startIndex; i < endIndex; i++) {
+          if (i == characters.length) {
+            // Loading widget
+            rowItems.add(
+              Expanded(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 350),
+                  child: const LoadingMoreWidget(),
+                ),
+              ),
+            );
+          } else if (i < characters.length) {
+            final character = characters[i];
+            rowItems.add(
+              Expanded(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 350),
+                  child: CharacterCard(character: character),
+                ),
+              ),
+            );
+          }
         }
 
-        final character = characters[index];
-        return CharacterCard(character: character);
+        // Adiciona espaços vazios se necessário para manter alinhamento
+        while (rowItems.length < cardsPerRow) {
+          rowItems.add(const Expanded(child: SizedBox()));
+        }
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: rowItems,
+          ),
+        );
       },
     );
   }
