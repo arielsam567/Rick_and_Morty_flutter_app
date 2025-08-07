@@ -5,7 +5,6 @@ import 'package:ricky_and_martie_app/models/character.dart';
 void main() {
   group('Character Model Tests', () {
     test('should parse JSON correctly', () {
-      // Arrange
       final json = {
         'id': 1,
         'name': 'Rick Sanchez',
@@ -24,10 +23,8 @@ void main() {
         'location': {'name': 'Earth (Replacement Dimension)'}
       };
 
-      // Act
       final character = Character.fromJson(json);
 
-      // Assert
       expect(character.id, equals(1));
       expect(character.name, equals('Rick Sanchez'));
       expect(character.status, equals(LifeStatus.Alive));
@@ -39,7 +36,6 @@ void main() {
     });
 
     test('should handle unknown status correctly', () {
-      // Arrange
       final json = {
         'id': 1,
         'name': 'Test Character',
@@ -55,15 +51,12 @@ void main() {
         'location': {'name': 'Mars'}
       };
 
-      // Act
       final character = Character.fromJson(json);
 
-      // Assert
       expect(character.status, equals(LifeStatus.unknown));
     });
 
     test('should return correct status colors', () {
-      // Arrange
       final aliveCharacter = Character(
           id: 1,
           name: 'Alive Character',
@@ -78,42 +71,20 @@ void main() {
           origin: 'Earth',
           location: 'Mars');
 
-      final deadCharacter = Character(
-          id: 2,
-          name: 'Dead Character',
-          status: LifeStatus.Dead,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/2',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+      final deadCharacter = aliveCharacter.copyWith(
+        status: LifeStatus.Dead,
+      );
 
-      final unknownCharacter = Character(
-          id: 3,
-          name: 'Unknown Character',
-          status: LifeStatus.unknown,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/3',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+      final unknownCharacter = aliveCharacter.copyWith(
+        status: LifeStatus.unknown,
+      );
 
-      // Act & Assert
       expect(aliveCharacter.getStatusColor(), equals(Colors.green));
       expect(deadCharacter.getStatusColor(), equals(Colors.red));
       expect(unknownCharacter.getStatusColor(), equals(Colors.grey));
     });
 
     test('should handle empty origin and location', () {
-      // Arrange
       final json = {
         'id': 1,
         'name': 'Test Character',
@@ -129,16 +100,13 @@ void main() {
         'location': {'name': ''}
       };
 
-      // Act
       final character = Character.fromJson(json);
 
-      // Assert
       expect(character.origin, equals(''));
       expect(character.location, equals(''));
     });
 
     test('should handle null origin and location', () {
-      // Arrange
       final json = {
         'id': 1,
         'name': 'Test Character',
@@ -154,10 +122,8 @@ void main() {
         'location': null
       };
 
-      // Act
       final character = Character.fromJson(json);
 
-      // Assert
       expect(character.origin, equals('Unknown'));
       expect(character.location, equals('Unknown'));
     });
