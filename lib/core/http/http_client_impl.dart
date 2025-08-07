@@ -31,7 +31,13 @@ class HttpClient implements HttpClientBase {
 
       return httpResponse;
     } on DioException catch (e) {
-      throw Exception('Erro na requisição: ${e.message}');
+      final statusCode = e.response?.statusCode;
+      final message = e.message ?? 'Erro desconhecido';
+      throw HttpException(
+        message: message,
+        statusCode: statusCode,
+        data: e.response?.data,
+      );
     }
   }
 
@@ -87,7 +93,13 @@ class HttpClient implements HttpClientBase {
         statusCode: response.statusCode ?? 201,
       );
     } on DioException catch (e) {
-      throw Exception('Erro na requisição: ${e.message}');
+      final statusCode = e.response?.statusCode;
+      final message = e.message ?? 'Erro desconhecido';
+      throw HttpException(
+        message: message,
+        statusCode: statusCode,
+        data: e.response?.data,
+      );
     }
   }
 }

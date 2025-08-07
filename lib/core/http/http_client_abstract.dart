@@ -8,6 +8,23 @@ class HttpResponse {
   });
 }
 
+class HttpException implements Exception {
+  final String message;
+  final int? statusCode;
+  final dynamic data;
+
+  HttpException({
+    required this.message,
+    this.statusCode,
+    this.data,
+  });
+
+  @override
+  String toString() {
+    return 'HttpException: $message (status: $statusCode)';
+  }
+}
+
 abstract class HttpClientBase {
   Future<HttpResponse> get(String path,
       {Map<String, dynamic>? queryParameters});

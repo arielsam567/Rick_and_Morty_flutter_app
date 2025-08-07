@@ -43,15 +43,6 @@ class RickAndMortyRepository {
         (json) => Character.fromJson(json),
       ));
     } catch (e) {
-       if (_isNotFoundError(e)) {
-        return Right(PaginatedResponse<Character>(
-          info: Info(
-            count: 0,
-            pages: 0,
-          ),
-          results: [],
-        ));
-      }
       return Left(_getUserFriendlyErrorMessage(e, 'buscar personagens'));
     }
   }
@@ -74,36 +65,21 @@ class RickAndMortyRepository {
     }
   }
 
-   bool _isNotFoundError(error) {
-    if (error is Exception) {
-      final errorString = error.toString().toLowerCase();
-      return errorString.contains('404') ||
-          errorString.contains('not found') ||
-          errorString.contains('não encontrado');
-    }
-    return false;
-  }
-
-   String _getUserFriendlyErrorMessage(error, String action) {
-    final errorString = error.toString().toLowerCase();
-
-    if (errorString.contains('404') || errorString.contains('not found')) {
-      return 'Nenhum resultado encontrado';
+  String _getUserFriendlyErrorMessage(error, String action) {
+    if (error is HttpException) {
+      switch (error.statusCode) {
+        case 404:
+          return 'Nenhum resultado encontrado';
+        case 500:
+          return 'Erro no servidor. Tente novamente em alguns instantes.';
+        case 408:
+        case 504:
+          return 'Tempo limite excedido. Verifique sua conexão com a internet.';
+        default:
+          break;
+      }
     }
 
-    if (errorString.contains('timeout') || errorString.contains('timed out')) {
-      return 'Tempo limite excedido. Verifique sua conexão com a internet.';
-    }
-
-    if (errorString.contains('network') || errorString.contains('connection')) {
-      return 'Erro de conexão. Verifique sua internet e tente novamente.';
-    }
-
-    if (errorString.contains('500') || errorString.contains('server')) {
-      return 'Erro no servidor. Tente novamente em alguns instantes.';
-    }
-
-    // Para outros erros, retorna uma mensagem genérica
     return 'Erro ao $action. Tente novamente.';
   }
 }
