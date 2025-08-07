@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'section_header.dart';
 
 class PropertiesWidget extends StatelessWidget {
   final String gender;
@@ -16,15 +17,7 @@ class PropertiesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
-        const Text(
-          'PROPERTIES',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey,
-          ),
-        ),
+        const SectionHeader(title: 'PROPERTIES'),
         const SizedBox(height: 16),
         _buildPropertyItem('GENDER', gender),
         const SizedBox(height: 8),
