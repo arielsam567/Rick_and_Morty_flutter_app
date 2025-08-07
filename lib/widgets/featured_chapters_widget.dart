@@ -30,12 +30,12 @@ class FeaturedChaptersWidget extends StatelessWidget {
   Widget _buildChapterItem(String episodeUrl) {
     final episodeInfo = _extractEpisodeInfo(episodeUrl);
 
-     return Padding(
+    return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 100,
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
       child: Container(
-        constraints: const BoxConstraints(
-          maxWidth: 100,
-        ),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(6),
