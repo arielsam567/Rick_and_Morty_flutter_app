@@ -44,7 +44,7 @@ class HttpClient implements HttpClientBase {
 
   Future<HttpResponse?> _getFromCache(String cacheKey) async {
     try {
-      final storage = await SharedPreferencesStorage.getInstance();
+      final storage = await LocalStorageService.getInstance();
       final cachedData = await storage.getString('cache_$cacheKey');
 
       if (cachedData != null) {
@@ -63,7 +63,7 @@ class HttpClient implements HttpClientBase {
 
   Future<void> _saveToCache(String cacheKey, HttpResponse response) async {
     try {
-      final storage = await SharedPreferencesStorage.getInstance();
+      final storage = await LocalStorageService.getInstance();
       final cacheData = {
         'data': response.data,
         'statusCode': response.statusCode,

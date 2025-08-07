@@ -4,6 +4,4 @@ abstract class StorageService {
   Future<String?> getString(String key);
 
   Future<bool> remove(String key);
-
-  Future<bool> clear();
 }
