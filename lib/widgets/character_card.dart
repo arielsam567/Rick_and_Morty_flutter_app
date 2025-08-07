@@ -23,10 +23,9 @@ class CharacterCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      color: const Color(0xffe0d5c1), // Cor bege clara como na imagem
+      color: const Color(0xffe0d5c1),
       child: InkWell(
-        onTap: () =>
-            context.push('/details/${character.id}99999', extra: character),
+        onTap: () => context.go('/details/${character.id}', extra: character),
         borderRadius: BorderRadius.circular(8.0),
         child: Padding(
           padding: const EdgeInsets.all(4.0),

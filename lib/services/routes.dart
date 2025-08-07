@@ -18,7 +18,7 @@ class AppRouter {
         name: 'details',
         builder: (context, state) {
           final characterId = int.parse(state.pathParameters['id']!);
-          final character = state.extra as Character;
+          final character = state.extra as Character?;
           return DetailsPage(characterId: characterId, character: character);
         },
       ),
