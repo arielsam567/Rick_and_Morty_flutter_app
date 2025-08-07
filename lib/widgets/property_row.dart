@@ -51,13 +51,19 @@ class PropertyRow extends StatelessWidget {
                   if (showArrow) ...[
                     const SizedBox(width: 12),
                   ],
-                  Center(
-                    child: Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[500],
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: isSmallScreen ? 100 : double.infinity,
+                      child: Text(
+                        value,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[500],
+                        ),
                       ),
                     ),
                   ),
