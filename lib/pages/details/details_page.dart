@@ -6,7 +6,7 @@ import 'package:ricky_and_martie_app/widgets/whereabouts_widget.dart';
 import 'package:ricky_and_martie_app/widgets/featured_chapters_widget.dart';
 import 'package:ricky_and_martie_app/widgets/character_image_widget.dart';
 import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
-import 'details_controller.dart';
+import 'package:ricky_and_martie_app/pages/details/details_controller.dart';
 
 class DetailsPage extends StatefulWidget {
   final int characterId;

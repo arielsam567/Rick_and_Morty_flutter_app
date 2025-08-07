@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/dio_config.dart';
 import 'package:ricky_and_martie_app/core/http_client_abstract.dart';
