@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ricky_and_martie_app/core/http_client_abstract.dart';
-import 'package:ricky_and_martie_app/core/storage_impl.dart';
+import 'package:ricky_and_martie_app/core/http/http_client_abstract.dart';
+import 'package:ricky_and_martie_app/core/storage/storage_impl.dart';
 import 'dart:convert';
 
 class HttpClient implements HttpClientBase {
