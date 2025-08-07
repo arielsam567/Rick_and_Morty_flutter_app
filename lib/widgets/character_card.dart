@@ -8,7 +8,7 @@ import 'package:ricky_and_martie_app/widgets/status_indicator.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
-  static const double imageSize = 100.0;
+  static const double imageSize = 110.0;
 
   const CharacterCard({
     required this.character,
@@ -20,7 +20,7 @@ class CharacterCard extends StatelessWidget {
     //define que a altura maxima é 110 do card
     return Center(
       child: SizedBox(
-        height: 110,
+        height: imageSize + 16,
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
           elevation: 2.0,
