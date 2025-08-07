@@ -4,7 +4,7 @@ Uma aplicação mobile desenvolvida em Flutter que consome a API do Rick and Mor
 
 ## 🌐 Acesso Online
 
-Você pode acessar a versão web da aplicação em: **[https://ricky-e-marty-app.web.app](https://ricky-e-marty-app.web.app)**
+Você pode acessar a versão web da aplicação em: **[https://ricky-e-marty-app.web.app](https://ricky-e-marty-app.web.app)** , publicada através do Firebase Hosting.
 
 ## 📱 Sobre o App
 
@@ -131,60 +131,9 @@ O arquivo `.vscode/launch.json` foi configurado com diferentes opções de debug
 
 Para cada plataforma (Android, iOS, Web Chrome, Web Edge, Current Device), você tem as 3 opções de ambiente disponíveis no menu de debug do VS Code.
 
-### 🔧 Personalizando Ambientes
+ 
 
-Para adicionar novos ambientes ou modificar URLs existentes, edite o arquivo `lib/config/environments.dart`:
-
-```dart
-class Environments {
-  // Adicione suas URLs aqui
-  static const String _devBaseUrl = 'https://dev-api.exemplo.com/api/';
-  static const String _prodBaseUrl = 'https://api.exemplo.com/api/';
-  static const String _defaultBaseUrl = 'https://rickandmortyapi.com/api/';
-  
-  // Adicione novos casos no switch se necessário
-  static String get baseUrl {
-    switch (_currentEnvironment.toLowerCase()) {
-      case 'dev':
-      case 'development':
-        return _devBaseUrl;
-      case 'prod':
-      case 'production':
-        return _prodBaseUrl;
-      default:
-        return _defaultBaseUrl;
-    }
-  }
-}
-```
-
-### 🏗️ Build para Produção com Parâmetros
-
-Para builds de produção, você pode usar os parâmetros da mesma forma:
-
-```bash
-# Build para Android com ambiente de desenvolvimento
-flutter build apk --dart-define=ENVIRONMENT=development
-
-# Build para iOS com ambiente de produção
-flutter build ios --dart-define=ENVIRONMENT=production
-
-# Build para Web com ambiente de produção
-flutter build web --dart-define=ENVIRONMENT=production
-```
-
-### 🔧 Configuração em CI/CD
-
-Para automatizar builds em diferentes ambientes, você pode usar variáveis de ambiente:
-
-```bash
-# Exemplo para GitHub Actions ou similar
-flutter build apk --dart-define=ENVIRONMENT=${{ secrets.ENVIRONMENT }}
-
-# Exemplo com ambiente específico
-flutter build apk --dart-define=ENVIRONMENT=production
-```
-```
+ 
 
 ## 📁 Estrutura do Projeto
 
@@ -220,7 +169,7 @@ lib/
     └── error/                  # Widgets de erro
 ```
 
-## 📦 Dependências Principais
+## 📦 Principais Dependências
 
 - **dio**: ^5.8.0+1 - Cliente HTTP
 - **cached_network_image**: ^3.4.1 - Cache de imagens
