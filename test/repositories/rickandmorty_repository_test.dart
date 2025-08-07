@@ -58,7 +58,7 @@ void main() {
                 (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
         // Act
-        final result = await repository.getCharacters(page: 1);
+        final result = await repository.getCharacters();
 
         // Assert
         expect(result.isRight(), isTrue);
@@ -82,7 +82,7 @@ void main() {
                 HttpException(message: 'Network error', statusCode: 500));
 
         // Act
-        final result = await repository.getCharacters(page: 1);
+        final result = await repository.getCharacters();
 
         // Assert
         expect(result.isLeft(), isTrue);
@@ -203,7 +203,7 @@ void main() {
                 (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
         // Act
-        final result = await repository.searchCharactersByName('Rick', page: 1);
+        final result = await repository.searchCharactersByName('Rick');
 
         // Assert
         expect(result.isRight(), isTrue);
@@ -226,7 +226,7 @@ void main() {
 
         // Act
         final result =
-            await repository.searchCharactersByName('InvalidName', page: 1);
+            await repository.searchCharactersByName('InvalidName');
 
         // Assert
         expect(result.isLeft(), isTrue);
@@ -358,7 +358,7 @@ void main() {
             .thenThrow(HttpException(message: 'Timeout', statusCode: 408));
 
         // Act
-        final result = await repository.getCharacters(page: 1);
+        final result = await repository.getCharacters();
 
         // Assert
         expect(result.isLeft(), isTrue);
@@ -376,7 +376,7 @@ void main() {
             .thenThrow(Exception('Generic error'));
 
         // Act
-        final result = await repository.getCharacters(page: 1);
+        final result = await repository.getCharacters();
 
         // Assert
         expect(result.isLeft(), isTrue);

@@ -37,6 +37,37 @@ class Character {
     required this.location,
   });
 
+  //crie o copyWith
+  Character copyWith({
+    int? id,
+    String? name,
+    LifeStatus? status,
+    String? species,
+    String? type,
+    String? gender,
+    String? image,
+    List<String>? episode,
+    String? url,
+    DateTime? created,
+    String? origin,
+    String? location,
+  }) {
+    return Character(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      status: status ?? this.status,
+      species: species ?? this.species,
+      type: type ?? this.type,
+      gender: gender ?? this.gender,
+      image: image ?? this.image,
+      episode: episode ?? this.episode,
+      url: url ?? this.url,
+      created: created ?? this.created,
+      origin: origin ?? this.origin,
+      location: location ?? this.location,
+    );
+  }
+
   static LifeStatus _parseStatus(String statusString) {
     try {
       return LifeStatus.values.byName(statusString);

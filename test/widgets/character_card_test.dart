@@ -56,25 +56,21 @@ void main() {
       );
 
       expect(find.text('Alive'), findsOneWidget);
-
       expect(find.byType(Container), findsWidgets);
     });
 
     testWidgets('should display correct status indicator for dead character',
         (tester) async {
-      final deadCharacter = Character(
-          id: 2,
-          name: 'Dead Character',
-          status: LifeStatus.Dead,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/2',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+      final deadCharacter = testCharacter.copyWith(
+        id: 2,
+        name: 'Dead Character',
+        status: LifeStatus.Dead,
+        image: 'https://example.com/image.jpg',
+        episode: [],
+        url: 'https://example.com/character/2',
+        origin: 'Earth',
+        location: 'Mars',
+      );
 
       await tester.pumpWidget(
         MaterialApp(
@@ -119,19 +115,17 @@ void main() {
     });
 
     testWidgets('should handle character with empty type', (tester) async {
-      final characterWithEmptyType = Character(
-          id: 3,
-          name: 'Character with Empty Type',
-          status: LifeStatus.Alive,
-          species: 'Alien',
-          type: '',
-          gender: 'Female',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/3',
-          created: DateTime.now(),
-          origin: 'Unknown',
-          location: 'Unknown');
+      final characterWithEmptyType = testCharacter.copyWith(
+        id: 3,
+        name: 'Character with Empty Type',
+        species: 'Alien',
+        gender: 'Female',
+        image: 'https://example.com/image.jpg',
+        episode: [],
+        url: 'https://example.com/character/3',
+        origin: 'Unknown',
+        location: 'Unknown',
+      );
 
       await tester.pumpWidget(
         MaterialApp(
@@ -149,19 +143,16 @@ void main() {
     });
 
     testWidgets('should handle character with unknown status', (tester) async {
-      final unknownStatusCharacter = Character(
-          id: 4,
-          name: 'Unknown Status Character',
-          status: LifeStatus.unknown,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/4',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+      final unknownStatusCharacter = testCharacter.copyWith(
+        id: 4,
+        name: 'Unknown Status Character',
+        status: LifeStatus.unknown,
+        image: 'https://example.com/image.jpg',
+        episode: [],
+        url: 'https://example.com/character/4',
+        origin: 'Earth',
+        location: 'Mars',
+      );
 
       await tester.pumpWidget(
         MaterialApp(
