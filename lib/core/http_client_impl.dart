@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:ricky_and_martie_app/core/http_client_abstract.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 /// Cliente HTTP usando Dio
 class HttpClient implements HttpClientBase {
@@ -11,13 +14,74 @@ class HttpClient implements HttpClientBase {
   Future<HttpResponse> get(String path,
       {Map<String, dynamic>? queryParameters}) async {
     try {
+      // Criar chave única para o cache baseada na URL e parâmetros
+      final cacheKey = _generateCacheKey(path, queryParameters);
+
+      // Tentar buscar dados do cache primeiro
+      final cachedData = await _getFromCache(cacheKey);
+      if (cachedData != null) {
+        debugPrint('🔍 Dados encontrados no cache: $cacheKey');
+        return cachedData;
+      }
+      debugPrint('🔍 Não há dados no cache para: $cacheKey');
+      // Se não há cache, fazer a requisição
       final response = await _dio.get(path, queryParameters: queryParameters);
-      return HttpResponse(
+      final httpResponse = HttpResponse(
         data: response.data,
         statusCode: response.statusCode ?? 200,
       );
+
+      // Salvar no cache
+      await _saveToCache(cacheKey, httpResponse);
+
+      return httpResponse;
     } on DioException catch (e) {
       throw Exception('Erro na requisição: ${e.message}');
+    }
+  }
+
+  /// Gera uma chave única para o cache baseada na URL e parâmetros
+  String _generateCacheKey(String path, Map<String, dynamic>? queryParameters) {
+    final queryString = queryParameters != null
+        ? queryParameters.entries.map((e) => '${e.key}=${e.value}').join('&')
+        : '';
+    return '$path?$queryString';
+  }
+
+  /// Busca dados do cache local
+  Future<HttpResponse?> _getFromCache(String cacheKey) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cachedData = prefs.getString('cache_$cacheKey');
+
+      if (cachedData != null) {
+        final decodedData = json.decode(cachedData);
+        return HttpResponse(
+          data: decodedData['data'],
+          statusCode: decodedData['statusCode'],
+        );
+      }
+      return null;
+    } catch (e) {
+      // Se houver erro ao ler cache, retorna null
+      return null;
+    }
+  }
+
+  /// Salva dados no cache local
+  Future<void> _saveToCache(String cacheKey, HttpResponse response) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cacheData = {
+        'data': response.data,
+        'statusCode': response.statusCode,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+      };
+
+      await prefs.setString('cache_$cacheKey', json.encode(cacheData));
+    } catch (e) {
+      // Se houver erro ao salvar cache, apenas ignora
+      debugPrint('Erro ao salvar cache: $e');
     }
   }
 
