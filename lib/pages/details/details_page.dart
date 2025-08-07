@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/widgets/properties_widget.dart';
@@ -40,6 +41,10 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalhes do Personagem'),
+        leading: IconButton(
+          onPressed: () => context.go('/'),
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: SafeArea(
         child: Consumer<DetailsController>(
