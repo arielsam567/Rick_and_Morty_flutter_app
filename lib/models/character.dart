@@ -43,21 +43,4 @@ class Character {
       location: json['location']['name'] ?? 'Unknown',
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'status': status,
-      'species': species,
-      'type': type,
-      'gender': gender,
-      'image': image,
-      'episode': episode,
-      'url': url,
-      'created': created.toIso8601String(),
-      'origin': {'name': origin},
-      'location': {'name': location},
-    };
-  }
 }

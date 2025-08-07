@@ -13,7 +13,6 @@ class HomeController extends ChangeNotifier {
   String? _errorMessage;
   String _searchQuery = '';
 
-  // Getters
   List<Character> get characters => _filteredCharacters;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;

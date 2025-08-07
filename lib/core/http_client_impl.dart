@@ -35,34 +35,4 @@ class HttpClient implements HttpClientBase {
       throw Exception('Erro na requisição: ${e.message}');
     }
   }
-
-  @override
-  Future<HttpResponse> put(String path,
-      {data, Map<String, dynamic>? queryParameters}) async {
-    try {
-      final response =
-          await _dio.put(path, data: data, queryParameters: queryParameters);
-      return HttpResponse(
-        data: response.data,
-        statusCode: response.statusCode ?? 200,
-      );
-    } on DioException catch (e) {
-      throw Exception('Erro na requisição: ${e.message}');
-    }
-  }
-
-  @override
-  Future<HttpResponse> delete(String path,
-      {Map<String, dynamic>? queryParameters}) async {
-    try {
-      final response =
-          await _dio.delete(path, queryParameters: queryParameters);
-      return HttpResponse(
-        data: response.data,
-        statusCode: response.statusCode ?? 204,
-      );
-    } on DioException catch (e) {
-      throw Exception('Erro na requisição: ${e.message}');
-    }
-  }
 }
