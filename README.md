@@ -177,14 +177,11 @@ lib/
 ├── config/                      # Configurações do app
 │   ├── app_widget.dart         # Widget principal
 │   ├── assets.dart             # Configuração de assets
-│   ├── dio_config.dart         # Configuração do HTTP client
 │   ├── strings.dart            # Strings da aplicação
 │   └── themes/                 # Temas e cores
 ├── core/                       # Camada de domínio
-│   ├── error/                  # Tratamento de erros
-│   ├── http_client.dart        # Cliente HTTP
-│   ├── network/                # Configurações de rede
-│   └── usecases/               # Casos de uso
+│   ├── http/                   # Camada de comunicação com a API
+│   ├── storage/                # Armazenamento local
 ├── models/                     # Modelos de dados
 │   ├── character.dart          # Modelo de personagem
 │   └── paginated_response.dart # Resposta paginada
@@ -221,8 +218,6 @@ lib/
 - **Rick and Morty API**: https://rickandmortyapi.com/
 - Documentação: https://rickandmortyapi.com/documentation
 
-## 📄 Licença
-
-Este projeto é desenvolvido para fins educacionais e de demonstração.
+ 
 
  

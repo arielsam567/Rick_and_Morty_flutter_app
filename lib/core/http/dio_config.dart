@@ -16,8 +16,6 @@ class DioConfig {
       'Accept': 'application/json',
     };
 
-    
-
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         // Aqui adicionaria headers de autenticação se necessário
