@@ -6,6 +6,7 @@ import 'package:ricky_and_martie_app/widgets/character_card.dart';
 import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
 import 'package:ricky_and_martie_app/widgets/empty_state_widget.dart';
 import 'package:ricky_and_martie_app/widgets/character_list_shimmer.dart';
+import 'package:ricky_and_martie_app/widgets/loading_more_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,18 +17,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeController _controller;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _controller = HomeController(context.read());
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
     _controller.loadCharacters();
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
     _controller.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      if (_controller.hasMorePages && !_controller.isLoadingMore) {
+        _controller.loadMoreCharacters();
+      }
+    }
   }
 
   @override
@@ -80,9 +95,16 @@ class _HomePageState extends State<HomePage> {
                 }
 
                 return ListView.builder(
+                  controller: _scrollController,
                   padding: const EdgeInsets.all(8.0),
-                  itemCount: _controller.characters.length,
+                  itemCount: _controller.characters.length +
+                      (_controller.hasMorePages ? 1 : 0),
                   itemBuilder: (context, index) {
+                    if (index == _controller.characters.length) {
+                      // Widget de carregamento no final da lista
+                      return const LoadingMoreWidget();
+                    }
+
                     final character = _controller.characters[index];
                     return CharacterCard(character: character);
                   },
