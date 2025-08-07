@@ -20,6 +20,10 @@ Ao clicar em um personagem da lista, exibir uma página de detalhes contendo:
 - **status** - Status do personagem (vivo, morto, desconhecido)
 - **species** - Espécie do personagem
 
+### 4. Pesquisa de Personagens -> Funcionalidade adicionada por mim
+
+Na tela onde é listado os personagens, deve ser possível pesquisar por nome do personagem.
+
 ## Critérios de Avaliação
 
 - ✅ **Código legível e organizado**

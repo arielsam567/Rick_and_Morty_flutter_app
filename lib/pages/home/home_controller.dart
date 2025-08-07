@@ -18,6 +18,7 @@ class HomeController extends ChangeNotifier {
   bool _hasMorePages = true;
   String? _nextPageUrl;
   Timer? _debounceTimer;
+  bool _isSearchMode = false;
 
   List<Character> get characters => _filteredCharacters;
   bool get isLoading => _isLoading;
@@ -25,6 +26,7 @@ class HomeController extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   String get searchQuery => _searchQuery;
   bool get hasMorePages => _hasMorePages;
+  bool get isSearchMode => _isSearchMode;
 
   Future<void> loadCharacters({bool refresh = false}) async {
     if (refresh) {
@@ -32,6 +34,7 @@ class HomeController extends ChangeNotifier {
       _allCharacters.clear();
       _hasMorePages = true;
       _nextPageUrl = null;
+      _isSearchMode = false;
     }
 
     if (!_hasMorePages || _isLoadingMore) {
@@ -72,12 +75,59 @@ class HomeController extends ChangeNotifier {
     );
   }
 
-  Future<void> loadMoreCharacters() async {
-    if (_searchQuery.isNotEmpty) {
-      return; // Não carrega mais itens durante busca
+  Future<void> searchCharactersByName(String name, {int page = 1}) async {
+    if (page == 1) {
+      _setLoading(true);
+      _currentPage = 1;
+      _allCharacters.clear();
+    } else {
+      _setLoadingMore(true);
     }
 
-    await loadCharacters();
+    _setError(null);
+    _isSearchMode = true;
+
+    final result = await _repository.searchCharactersByName(name, page: page);
+
+    result.fold(
+      (error) {
+        _setError(error);
+        _setLoading(false);
+        _setLoadingMore(false);
+        if (page == 1) {
+          _allCharacters = [];
+          _filteredCharacters = [];
+        }
+      },
+      (response) {
+        if (page == 1) {
+          _allCharacters = response.results;
+        } else {
+          _allCharacters.addAll(response.results);
+        }
+
+        _filteredCharacters = _allCharacters;
+        _hasMorePages = response.info.next != null;
+        _nextPageUrl = response.info.next;
+        _currentPage = page + 1;
+        _setLoading(false);
+        _setLoadingMore(false);
+      },
+    );
+  }
+
+  Future<void> loadMoreCharacters() async {
+    if (!_hasMorePages || _isLoadingMore) {
+      return;
+    }
+
+    if (_isSearchMode) {
+      // Em modo de busca, carrega mais itens da busca
+      await searchCharactersByName(_searchQuery, page: _currentPage);
+    } else {
+      // Em modo normal, carrega mais itens da lista geral
+      await loadCharacters();
+    }
   }
 
   void updateSearchQuery(String query) {
@@ -88,6 +138,7 @@ class HomeController extends ChangeNotifier {
 
     // Reset paginação quando a busca muda
     if (_searchQuery.isEmpty) {
+      _isSearchMode = false;
       _currentPage = 1;
       _allCharacters.clear();
       _hasMorePages = true;
@@ -96,8 +147,7 @@ class HomeController extends ChangeNotifier {
     } else {
       // Debounce de 500ms para evitar muitas requisições
       _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-        _filterCharacters();
-        notifyListeners();
+        searchCharactersByName(_searchQuery, page: 1);
       });
     }
   }
@@ -130,7 +180,11 @@ class HomeController extends ChangeNotifier {
   }
 
   void retry() {
-    loadCharacters(refresh: true);
+    if (_isSearchMode) {
+      searchCharactersByName(_searchQuery, page: 1);
+    } else {
+      loadCharacters(refresh: true);
+    }
   }
 
   @override

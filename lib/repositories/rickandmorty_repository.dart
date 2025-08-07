@@ -32,10 +32,11 @@ class RickAndMortyRepository {
   }
 
   Future<Either<String, PaginatedResponse<Character>>> searchCharactersByName(
-      String name) async {
+      String name,
+      {int page = 1}) async {
     try {
-      final response =
-          await _httpClient.get('character', queryParameters: {'name': name});
+      final response = await _httpClient
+          .get('character', queryParameters: {'name': name, 'page': page});
 
       return Right(PaginatedResponse<Character>.fromJson(
         response.data,
