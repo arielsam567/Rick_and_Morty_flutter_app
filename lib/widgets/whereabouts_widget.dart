@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ricky_and_martie_app/widgets/section_header.dart';
 
 class WhereaboutsWidget extends StatelessWidget {
   final String origin;
@@ -14,15 +15,7 @@ class WhereaboutsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
-        const Text(
-          'WHEREABOUTS',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey,
-          ),
-        ),
+        const SectionHeader(title: 'WHEREABOUTS'),
         const SizedBox(height: 16),
         _buildLocationItem('ORIGIN', origin),
         const SizedBox(height: 8),

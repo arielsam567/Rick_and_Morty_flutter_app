@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ricky_and_martie_app/widgets/section_header.dart';
 
 class FeaturedChaptersWidget extends StatelessWidget {
   final List<String> episodes;
@@ -12,15 +13,7 @@ class FeaturedChaptersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
-        const Text(
-          'FEATURED CHAPTERS',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey,
-          ),
-        ),
+        const SectionHeader(title: 'FEATURED CHAPTERS'),
         const SizedBox(height: 16),
         ...episodes.take(5).map((episode) => _buildChapterItem(episode)),
       ],
