@@ -72,13 +72,17 @@ class FeaturedChaptersWidget extends StatelessWidget {
   }
 
   Map<String, String> _extractEpisodeInfo(String episodeUrl) {
-    // Exemplo de URL: https://rickandmortyapi.com/api/episode/1
     final parts = episodeUrl.split('/');
     final episodeNumber = parts.last;
+    const epPerSeason = 11;
+
+    final season = (int.parse(episodeNumber) ~/ epPerSeason) + 1;
+    final episode = int.parse(episodeNumber) % epPerSeason;
 
     return {
-      'code': 'S01E$episodeNumber',
-      'name': 'Episode $episodeNumber',
+      'code':
+          'S${season.toString().padLeft(2, '0')}E${episode.toString().padLeft(2, '0')}',
+      'name': 'Episode $episode',
       'date': 'Unknown Date',
     };
   }
