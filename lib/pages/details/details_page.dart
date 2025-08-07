@@ -6,6 +6,7 @@ import 'package:ricky_and_martie_app/widgets/whereabouts_widget.dart';
 import 'package:ricky_and_martie_app/widgets/featured_chapters_widget.dart';
 import 'package:ricky_and_martie_app/widgets/character_image_widget.dart';
 import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
+import 'package:ricky_and_martie_app/widgets/details_page_shimmer.dart';
 import 'package:ricky_and_martie_app/pages/details/details_controller.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -37,26 +38,15 @@ class _DetailsPageState extends State<DetailsPage> {
         child: Consumer<DetailsController>(
           builder: (context, controller, child) {
             if (controller.isLoading) {
-              return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text('Carregando personagem...'),
-                  ],
-                ),
-              );
+              return const DetailsPageShimmer();
             }
 
             if (controller.error != null) {
-              return Center(
-                child: ErrorMessageWidget(
-                  icon: Icons.error_outline,
-                  title: 'Erro ao carregar personagem',
-                  message: controller.error!,
-                  onRetry: () => controller.loadCharacter(widget.characterId),
-                ),
+              return ErrorMessageWidget(
+                icon: Icons.error_outline,
+                title: 'Erro ao carregar personagem',
+                message: controller.error,
+                onRetry: () => controller.loadCharacter(widget.characterId),
               );
             }
 
