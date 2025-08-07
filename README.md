@@ -79,7 +79,7 @@ A aplicação foi desenvolvida seguindo a inspiração acima e resultou nas segu
 ### Instalação
 ```bash
 # Clone o repositório
-git clone [URL_DO_REPOSITORIO]
+git clone https://github.com/seu-usuario/ricky_and_martie_app.git
 
 # Navegue para o diretório do projeto
 cd ricky_and_martie_app
@@ -89,6 +89,7 @@ flutter pub get
 
 # Execute o aplicativo
 flutter run
+```
 
 ### 🚀 Executando com Parâmetros
 
@@ -133,7 +134,6 @@ Para cada plataforma (Android, iOS, Web Chrome, Web Edge, Current Device), você
 
  
 
- 
 
 ## 📁 Estrutura do Projeto
 
@@ -144,11 +144,12 @@ lib/
 │   ├── app_widget.dart         # Widget principal
 │   ├── assets.dart             # Configuração de assets
 │   ├── strings.dart            # Strings da aplicação
+│   ├── environments.dart       # Configuração de ambientes
 │   └── themes/                 # Temas e cores
 ├── infrastructure/             # Camada de infraestrutura
-│   ├── http/                   # Camada de comunicação com a API
+│   ├── http/                   # Cliente HTTP
 │   ├── storage/                # Armazenamento local
-│   └── routes.dart             # Configuração de rotas
+│   └── routes/                 # Configuração de rotas
 ├── models/                     # Modelos de dados
 │   ├── character.dart          # Modelo de personagem
 │   └── paginated_response.dart # Resposta paginada
@@ -164,8 +165,22 @@ lib/
     ├── character_image_widget.dart
     ├── status_indicator.dart   # Indicador de status
     ├── gender_indicator.dart   # Indicador de gênero
-    ├── shimmer/                # Estados de loading
-    └── error/                  # Widgets de erro
+    ├── character_list_shimmer.dart
+    ├── responsive_character_list.dart
+    ├── empty_characters_widget.dart
+    ├── search_field_widget.dart
+    ├── property_row.dart
+    ├── section_header.dart
+    ├── featured_chapters_widget.dart
+    ├── error_message_widget.dart
+    ├── details_page_shimmer.dart
+    ├── character_card_shimmer.dart
+    ├── loading_more_widget.dart
+    ├── retry_button.dart
+    ├── whereabouts_widget.dart
+    ├── properties_widget.dart
+    ├── erro_builder.dart
+    └── empty_state_widget.dart
 ```
 
 ## 📦 Principais Dependências
