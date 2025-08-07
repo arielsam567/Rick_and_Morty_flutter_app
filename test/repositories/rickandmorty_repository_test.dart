@@ -1,115 +1,392 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+import 'package:ricky_and_martie_app/core/http/http_client_abstract.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
+import 'package:ricky_and_martie_app/models/paginated_response.dart';
+import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
+
+// Gerar mocks
+@GenerateMocks([HttpClientBase])
+import 'rickandmorty_repository_test.mocks.dart';
 
 void main() {
-  group('Character Model Tests', () {
-    test('should parse JSON correctly', () {
-      // Arrange
-      final json = {
-        'id': 1,
-        'name': 'Rick Sanchez',
-        'status': 'Alive',
-        'species': 'Human',
-        'type': '',
-        'gender': 'Male',
-        'image': 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-        'episode': [
-          'https://rickandmortyapi.com/api/episode/1',
-          'https://rickandmortyapi.com/api/episode/2'
-        ],
-        'url': 'https://rickandmortyapi.com/api/character/1',
-        'created': '2017-11-04T18:48:46.250Z',
-        'origin': {'name': 'Earth (C-137)'},
-        'location': {'name': 'Earth (Replacement Dimension)'}
-      };
+  group('RickAndMortyRepository Tests', () {
+    late MockHttpClientBase mockHttpClient;
+    late RickAndMortyRepository repository;
 
-      // Act
-      final character = Character.fromJson(json);
-
-      // Assert
-      expect(character.id, equals(1));
-      expect(character.name, equals('Rick Sanchez'));
-      expect(character.status, equals(LifeStatus.Alive));
-      expect(character.species, equals('Human'));
-      expect(character.gender, equals('Male'));
-      expect(character.origin, equals('Earth (C-137)'));
-      expect(character.location, equals('Earth (Replacement Dimension)'));
-      expect(character.episode.length, equals(2));
+    setUp(() {
+      mockHttpClient = MockHttpClientBase();
+      repository = RickAndMortyRepository(mockHttpClient);
     });
 
-    test('should handle unknown status correctly', () {
-      // Arrange
-      final json = {
-        'id': 1,
-        'name': 'Test Character',
-        'status': 'Unknown',
-        'species': 'Human',
-        'type': '',
-        'gender': 'Male',
-        'image': 'https://example.com/image.jpg',
-        'episode': [],
-        'url': 'https://example.com/character/1',
-        'created': '2017-11-04T18:48:46.250Z',
-        'origin': {'name': 'Earth'},
-        'location': {'name': 'Mars'}
-      };
+    group('getCharacters', () {
+      test('should return PaginatedResponse when API call is successful',
+          () async {
+        // Arrange
+        final mockResponse = {
+          'info': {
+            'count': 826,
+            'pages': 42,
+            'next': 'https://rickandmortyapi.com/api/character/?page=2',
+            'prev': null
+          },
+          'results': [
+            {
+              'id': 1,
+              'name': 'Rick Sanchez',
+              'status': 'Alive',
+              'species': 'Human',
+              'type': '',
+              'gender': 'Male',
+              'image':
+                  'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+              'episode': [
+                'https://rickandmortyapi.com/api/episode/1',
+                'https://rickandmortyapi.com/api/episode/2'
+              ],
+              'url': 'https://rickandmortyapi.com/api/character/1',
+              'created': '2017-11-04T18:48:46.250Z',
+              'origin': {'name': 'Earth (C-137)'},
+              'location': {'name': 'Earth (Replacement Dimension)'}
+            }
+          ]
+        };
 
-      // Act
-      final character = Character.fromJson(json);
+        when(mockHttpClient.get('character', queryParameters: {'page': 1}))
+            .thenAnswer(
+                (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-      // Assert
-      expect(character.status, equals(LifeStatus.unknown));
+        // Act
+        final result = await repository.getCharacters(page: 1);
+
+        // Assert
+        expect(result.isRight(), isTrue);
+        result.fold(
+          (error) => fail('Should not return error'),
+          (paginatedResponse) {
+            expect(paginatedResponse, isA<PaginatedResponse<Character>>());
+            expect(paginatedResponse.results.length, equals(1));
+            expect(
+                paginatedResponse.results.first.name, equals('Rick Sanchez'));
+            expect(paginatedResponse.info.count, equals(826));
+            expect(paginatedResponse.info.pages, equals(42));
+          },
+        );
+      });
+
+      test('should return error message when API call fails', () async {
+        // Arrange
+        when(mockHttpClient.get('character', queryParameters: {'page': 1}))
+            .thenThrow(
+                HttpException(message: 'Network error', statusCode: 500));
+
+        // Act
+        final result = await repository.getCharacters(page: 1);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, contains('Erro no servidor'));
+          },
+          (response) => fail('Should not return success'),
+        );
+      });
+
+      test('should return 404 error message when no results found', () async {
+        // Arrange
+        when(mockHttpClient.get('character', queryParameters: {'page': 999}))
+            .thenThrow(HttpException(message: 'Not found', statusCode: 404));
+
+        // Act
+        final result = await repository.getCharacters(page: 999);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, equals('Nenhum resultado encontrado'));
+          },
+          (response) => fail('Should not return success'),
+        );
+      });
     });
 
-    test('should return correct status colors', () {
-      // Arrange
-      final aliveCharacter = Character(
-          id: 1,
-          name: 'Alive Character',
-          status: LifeStatus.Alive,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/1',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+    group('getCharacterById', () {
+      test('should return Character when API call is successful', () async {
+        // Arrange
+        final mockResponse = {
+          'id': 1,
+          'name': 'Rick Sanchez',
+          'status': 'Alive',
+          'species': 'Human',
+          'type': '',
+          'gender': 'Male',
+          'image': 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+          'episode': [
+            'https://rickandmortyapi.com/api/episode/1',
+            'https://rickandmortyapi.com/api/episode/2'
+          ],
+          'url': 'https://rickandmortyapi.com/api/character/1',
+          'created': '2017-11-04T18:48:46.250Z',
+          'origin': {'name': 'Earth (C-137)'},
+          'location': {'name': 'Earth (Replacement Dimension)'}
+        };
 
-      final deadCharacter = Character(
-          id: 2,
-          name: 'Dead Character',
-          status: LifeStatus.Dead,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/2',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+        when(mockHttpClient.get('character/1')).thenAnswer(
+            (_) async => HttpResponse(data: mockResponse, statusCode: 200));
 
-      final unknownCharacter = Character(
-          id: 3,
-          name: 'Unknown Character',
-          status: LifeStatus.unknown,
-          species: 'Human',
-          type: '',
-          gender: 'Male',
-          image: 'https://example.com/image.jpg',
-          episode: [],
-          url: 'https://example.com/character/3',
-          created: DateTime.now(),
-          origin: 'Earth',
-          location: 'Mars');
+        // Act
+        final result = await repository.getCharacterById(1);
 
-      // Act & Assert
-      expect(aliveCharacter.getStatusColor(), equals(Colors.green));
-      expect(deadCharacter.getStatusColor(), equals(Colors.red));
-      expect(unknownCharacter.getStatusColor(), equals(Colors.grey));
+        // Assert
+        expect(result.isRight(), isTrue);
+        result.fold(
+          (error) => fail('Should not return error'),
+          (character) {
+            expect(character, isA<Character>());
+            expect(character.id, equals(1));
+            expect(character.name, equals('Rick Sanchez'));
+            expect(character.status, equals(LifeStatus.Alive));
+          },
+        );
+      });
+
+      test('should return error message when character not found', () async {
+        // Arrange
+        when(mockHttpClient.get('character/999'))
+            .thenThrow(HttpException(message: 'Not found', statusCode: 404));
+
+        // Act
+        final result = await repository.getCharacterById(999);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, equals('Nenhum resultado encontrado'));
+          },
+          (character) => fail('Should not return success'),
+        );
+      });
+    });
+
+    group('searchCharactersByName', () {
+      test('should return PaginatedResponse when search is successful',
+          () async {
+        // Arrange
+        final mockResponse = {
+          'info': {'count': 1, 'pages': 1, 'next': null, 'prev': null},
+          'results': [
+            {
+              'id': 1,
+              'name': 'Rick Sanchez',
+              'status': 'Alive',
+              'species': 'Human',
+              'type': '',
+              'gender': 'Male',
+              'image':
+                  'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+              'episode': [],
+              'url': 'https://rickandmortyapi.com/api/character/1',
+              'created': '2017-11-04T18:48:46.250Z',
+              'origin': {'name': 'Earth (C-137)'},
+              'location': {'name': 'Earth (Replacement Dimension)'}
+            }
+          ]
+        };
+
+        when(mockHttpClient
+                .get('character', queryParameters: {'name': 'Rick', 'page': 1}))
+            .thenAnswer(
+                (_) async => HttpResponse(data: mockResponse, statusCode: 200));
+
+        // Act
+        final result = await repository.searchCharactersByName('Rick', page: 1);
+
+        // Assert
+        expect(result.isRight(), isTrue);
+        result.fold(
+          (error) => fail('Should not return error'),
+          (paginatedResponse) {
+            expect(paginatedResponse, isA<PaginatedResponse<Character>>());
+            expect(paginatedResponse.results.length, equals(1));
+            expect(
+                paginatedResponse.results.first.name, equals('Rick Sanchez'));
+          },
+        );
+      });
+
+      test('should return error message when search fails', () async {
+        // Arrange
+        when(mockHttpClient.get('character',
+                queryParameters: {'name': 'InvalidName', 'page': 1}))
+            .thenThrow(HttpException(message: 'Not found', statusCode: 404));
+
+        // Act
+        final result =
+            await repository.searchCharactersByName('InvalidName', page: 1);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, equals('Nenhum resultado encontrado'));
+          },
+          (response) => fail('Should not return success'),
+        );
+      });
+    });
+
+    group('getCharactersByIds', () {
+      test(
+          'should return List<Character> when API call is successful for single ID',
+          () async {
+        // Arrange
+        final mockResponse = {
+          'id': 1,
+          'name': 'Rick Sanchez',
+          'status': 'Alive',
+          'species': 'Human',
+          'type': '',
+          'gender': 'Male',
+          'image': 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+          'episode': [],
+          'url': 'https://rickandmortyapi.com/api/character/1',
+          'created': '2017-11-04T18:48:46.250Z',
+          'origin': {'name': 'Earth (C-137)'},
+          'location': {'name': 'Earth (Replacement Dimension)'}
+        };
+
+        when(mockHttpClient.get('character/1')).thenAnswer(
+            (_) async => HttpResponse(data: mockResponse, statusCode: 200));
+
+        // Act
+        final result = await repository.getCharactersByIds([1]);
+
+        // Assert
+        expect(result.isRight(), isTrue);
+        result.fold(
+          (error) => fail('Should not return error'),
+          (characters) {
+            expect(characters, isA<List<Character>>());
+            expect(characters.length, equals(1));
+            expect(characters.first.name, equals('Rick Sanchez'));
+          },
+        );
+      });
+
+      test(
+          'should return List<Character> when API call is successful for multiple IDs',
+          () async {
+        // Arrange
+        final mockResponse = [
+          {
+            'id': 1,
+            'name': 'Rick Sanchez',
+            'status': 'Alive',
+            'species': 'Human',
+            'type': '',
+            'gender': 'Male',
+            'image': 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+            'episode': [],
+            'url': 'https://rickandmortyapi.com/api/character/1',
+            'created': '2017-11-04T18:48:46.250Z',
+            'origin': {'name': 'Earth (C-137)'},
+            'location': {'name': 'Earth (Replacement Dimension)'}
+          },
+          {
+            'id': 2,
+            'name': 'Morty Smith',
+            'status': 'Alive',
+            'species': 'Human',
+            'type': '',
+            'gender': 'Male',
+            'image': 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
+            'episode': [],
+            'url': 'https://rickandmortyapi.com/api/character/2',
+            'created': '2017-11-04T18:48:46.250Z',
+            'origin': {'name': 'Earth (C-137)'},
+            'location': {'name': 'Earth (Replacement Dimension)'}
+          }
+        ];
+
+        when(mockHttpClient.get('character/1,2')).thenAnswer(
+            (_) async => HttpResponse(data: mockResponse, statusCode: 200));
+
+        // Act
+        final result = await repository.getCharactersByIds([1, 2]);
+
+        // Assert
+        expect(result.isRight(), isTrue);
+        result.fold(
+          (error) => fail('Should not return error'),
+          (characters) {
+            expect(characters, isA<List<Character>>());
+            expect(characters.length, equals(2));
+            expect(characters[0].name, equals('Rick Sanchez'));
+            expect(characters[1].name, equals('Morty Smith'));
+          },
+        );
+      });
+
+      test('should return error message when getCharactersByIds fails',
+          () async {
+        // Arrange
+        when(mockHttpClient.get('character/999'))
+            .thenThrow(HttpException(message: 'Not found', statusCode: 404));
+
+        // Act
+        final result = await repository.getCharactersByIds([999]);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, equals('Nenhum resultado encontrado'));
+          },
+          (characters) => fail('Should not return success'),
+        );
+      });
+    });
+
+    group('Error handling', () {
+      test('should handle timeout errors correctly', () async {
+        // Arrange
+        when(mockHttpClient.get('character', queryParameters: {'page': 1}))
+            .thenThrow(HttpException(message: 'Timeout', statusCode: 408));
+
+        // Act
+        final result = await repository.getCharacters(page: 1);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, contains('Tempo limite excedido'));
+          },
+          (response) => fail('Should not return success'),
+        );
+      });
+
+      test('should handle generic errors correctly', () async {
+        // Arrange
+        when(mockHttpClient.get('character', queryParameters: {'page': 1}))
+            .thenThrow(Exception('Generic error'));
+
+        // Act
+        final result = await repository.getCharacters(page: 1);
+
+        // Assert
+        expect(result.isLeft(), isTrue);
+        result.fold(
+          (error) {
+            expect(error, contains('carregar personagens'));
+          },
+          (response) => fail('Should not return success'),
+        );
+      });
     });
   });
 }

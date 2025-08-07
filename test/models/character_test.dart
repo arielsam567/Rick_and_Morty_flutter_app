@@ -4,7 +4,7 @@ import 'package:ricky_and_martie_app/models/character.dart';
 
 void main() {
   group('Character Model Tests', () {
-    test('should create Character from valid JSON', () {
+    test('should parse JSON correctly', () {
       // Arrange
       final json = {
         'id': 1,
@@ -112,7 +112,7 @@ void main() {
       expect(unknownCharacter.getStatusColor(), equals(Colors.grey));
     });
 
-    test('should handle missing origin and location names', () {
+    test('should handle empty origin and location', () {
       // Arrange
       final json = {
         'id': 1,
@@ -125,16 +125,16 @@ void main() {
         'episode': [],
         'url': 'https://example.com/character/1',
         'created': '2017-11-04T18:48:46.250Z',
-        'origin': {},
-        'location': {}
+        'origin': {'name': ''},
+        'location': {'name': ''}
       };
 
       // Act
       final character = Character.fromJson(json);
 
       // Assert
-      expect(character.origin, equals('Unknown'));
-      expect(character.location, equals('Unknown'));
+      expect(character.origin, equals(''));
+      expect(character.location, equals(''));
     });
 
     test('should handle null origin and location', () {
@@ -150,8 +150,8 @@ void main() {
         'episode': [],
         'url': 'https://example.com/character/1',
         'created': '2017-11-04T18:48:46.250Z',
-        'origin': {},
-        'location': {}
+        'origin': null,
+        'location': null
       };
 
       // Act

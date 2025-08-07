@@ -57,8 +57,8 @@ class Character {
       episode: List<String>.from(json['episode']),
       url: json['url'],
       created: DateTime.parse(json['created']),
-      origin: json['origin']['name'] ?? 'Unknown',
-      location: json['location']['name'] ?? 'Unknown',
+      origin: json['origin']?['name'] ?? 'Unknown',
+      location: json['location']?['name'] ?? 'Unknown',
     );
   }
 
