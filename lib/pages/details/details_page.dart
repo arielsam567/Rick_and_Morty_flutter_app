@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/widgets/properties_widget.dart';
 import 'package:ricky_and_martie_app/widgets/whereabouts_widget.dart';
@@ -25,7 +24,6 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
-    // Carrega os dados do personagem quando a página é inicializada
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DetailsController>().loadCharacter(widget.characterId);
     });
@@ -34,6 +32,9 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Detalhes do Personagem'),
+      ),
       body: SafeArea(
         child: Consumer<DetailsController>(
           builder: (context, controller, child) {
@@ -62,15 +63,6 @@ class _DetailsPageState extends State<DetailsPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    // Header com botão voltar
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: () => context.go('/'),
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: 16),
 
                     // Imagem do personagem com status

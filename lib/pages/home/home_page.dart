@@ -101,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                       (_controller.hasMorePages ? 1 : 0),
                   itemBuilder: (context, index) {
                     if (index == _controller.characters.length) {
-                      // Widget de carregamento no final da lista
                       return const LoadingMoreWidget();
                     }
 

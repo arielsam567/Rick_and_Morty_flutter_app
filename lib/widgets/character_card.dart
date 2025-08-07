@@ -25,15 +25,13 @@ class CharacterCard extends StatelessWidget {
       ),
       color: const Color(0xffe0d5c1), // Cor bege clara como na imagem
       child: InkWell(
-        onTap: () {
-          context.go('/details/${character.id}');
-        },
+        onTap: () => context.push('/details/${character.id}', extra: character),
         borderRadius: BorderRadius.circular(8.0),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Row(
             children: [
-              // Imagem do personagem à esquerda
+              // Img
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: CachedNetworkImage(
@@ -69,7 +67,7 @@ class CharacterCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              // Informações do personagem à direita
+              // Name, specie, life status and gender
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
