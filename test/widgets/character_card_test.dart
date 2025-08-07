@@ -27,8 +27,7 @@ void main() {
     });
 
     testWidgets('should display character information correctly',
-        (WidgetTester tester) async {
-      // Act
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -39,15 +38,13 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.text('Rick Sanchez'), findsOneWidget);
       expect(find.text('HUMAN'), findsOneWidget);
       expect(find.text('Male'), findsOneWidget);
     });
 
     testWidgets('should display correct status indicator for alive character',
-        (WidgetTester tester) async {
-      // Act
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -58,15 +55,13 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.text('Alive'), findsOneWidget);
-      // Verificar se o indicador de status está presente
+
       expect(find.byType(Container), findsWidgets);
     });
 
     testWidgets('should display correct status indicator for dead character',
-        (WidgetTester tester) async {
-      // Arrange
+        (tester) async {
       final deadCharacter = Character(
           id: 2,
           name: 'Dead Character',
@@ -81,7 +76,6 @@ void main() {
           origin: 'Earth',
           location: 'Mars');
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -92,13 +86,10 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.text('Dead'), findsOneWidget);
     });
 
-    testWidgets('should have InkWell for navigation',
-        (WidgetTester tester) async {
-      // Act
+    testWidgets('should have InkWell for navigation', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -109,13 +100,11 @@ void main() {
         ),
       );
 
-      // Assert
       // Verificar se o InkWell está presente para navegação
       expect(find.byType(InkWell), findsOneWidget);
     });
 
-    testWidgets('should display character image', (WidgetTester tester) async {
-      // Act
+    testWidgets('should display character image', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -126,12 +115,10 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.byType(Image), findsOneWidget);
     });
 
     testWidgets('should handle character with empty type', (tester) async {
-      // Arrange
       final characterWithEmptyType = Character(
           id: 3,
           name: 'Character with Empty Type',
@@ -146,7 +133,6 @@ void main() {
           origin: 'Unknown',
           location: 'Unknown');
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -157,15 +143,12 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.text('Character with Empty Type'), findsOneWidget);
       expect(find.text('ALIEN'), findsOneWidget);
       expect(find.text('Female'), findsOneWidget);
     });
 
-    testWidgets('should handle character with unknown status',
-        (WidgetTester tester) async {
-      // Arrange
+    testWidgets('should handle character with unknown status', (tester) async {
       final unknownStatusCharacter = Character(
           id: 4,
           name: 'Unknown Status Character',
@@ -180,7 +163,6 @@ void main() {
           origin: 'Earth',
           location: 'Mars');
 
-      // Act
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -191,7 +173,6 @@ void main() {
         ),
       );
 
-      // Assert
       expect(find.text('Unknown Status Character'), findsOneWidget);
       expect(find.text('unknown'), findsOneWidget);
     });
