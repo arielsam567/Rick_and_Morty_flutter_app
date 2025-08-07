@@ -2,38 +2,52 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter (Android)",
-      "request": "launch",
-      "type": "dart",
-      "program": "lib/main.dart",
-      "deviceId": "android"
-    },
-    {
-      "name": "Flutter (iOS)",
-      "request": "launch",
-      "type": "dart",
-      "program": "lib/main.dart",
-      "deviceId": "ios"
-    },
-    {
       "name": "Flutter (Web Chrome)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "deviceId": "chrome"
+      "deviceId": "chrome",
+      "args": []
     },
     {
-      "name": "Flutter (Web Edge)",
+      "name": "Flutter (Web Chrome - Development)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "deviceId": "edge"
+      "deviceId": "chrome",
+      "args": ["--dart-define=ENVIRONMENT=development"]
     },
     {
-      "name": "Flutter (Current Device)",
+      "name": "Flutter (Web Chrome - Production)",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main.dart"
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--dart-define=ENVIRONMENT=production"]
+    },
+    {
+      "name": "Flutter (Android)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "android",
+      "args": []
+    },
+    {
+      "name": "Flutter (Android - Development)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "android",
+      "args": ["--dart-define=ENVIRONMENT=development"]
+    },
+    {
+      "name": "Flutter (Android - Production)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "android",
+      "args": ["--dart-define=ENVIRONMENT=production"]
     }
   ]
 }
