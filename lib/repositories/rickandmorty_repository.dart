@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:ricky_and_martie_app/core/http_client.dart';
+import 'package:ricky_and_martie_app/core/http_client_impl.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/models/paginated_response.dart';
 
 class RickAndMortyRepository {
-  final HttpClient _httpClient;
+  final HttpClientBase _httpClient;
 
   RickAndMortyRepository(this._httpClient);
 

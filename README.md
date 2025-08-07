@@ -110,8 +110,8 @@ lib/
 - **shimmer**: ^3.0.0 - Efeitos de loading
 - **go_router**: ^16.1.0 - Navegação
 - **provider**: ^6.1.5 - Gerenciamento de estado
-- **dartz**: ^0.10.1 - Programação funcional
-- **equatable**: ^2.0.5 - Comparação de objetos
+- **dartz**: ^0.10.1 - Programação funcional 
+- **flutter_launcher_icons**: ^0.14.1 - Ícones do aplicativo
 
 ## 🔗 API Utilizada
 

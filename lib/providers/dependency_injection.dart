@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/dio_config.dart';
-import 'package:ricky_and_martie_app/core/http_client.dart';
+import 'package:ricky_and_martie_app/core/http_client_impl.dart';
 import 'package:ricky_and_martie_app/repositories/rickandmorty_repository.dart';
 
 class DependencyInjection {
@@ -11,14 +11,15 @@ class DependencyInjection {
       create: (_) => DioConfig.createDio(),
     ),
 
-    // Provider para o HttpClient
-    Provider<HttpClient>(
+    // Provider para o HttpClientBase (classe abstrata)
+    Provider<HttpClientBase>(
       create: (context) => HttpClient(context.read<Dio>()),
     ),
 
     // Provider para o RickAndMortyRepository
     Provider<RickAndMortyRepository>(
-      create: (context) => RickAndMortyRepository(context.read<HttpClient>()),
+      create: (context) =>
+          RickAndMortyRepository(context.read<HttpClientBase>()),
     ),
   ];
 }
