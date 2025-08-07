@@ -4,17 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:ricky_and_martie_app/models/character.dart';
 import 'package:ricky_and_martie_app/widgets/character_card.dart';
 
-class MockGoRouter extends ChangeNotifier {
-  String? lastNavigatedRoute;
-  Object? lastExtra;
-
-  void go(String location, {Object? extra}) {
-    lastNavigatedRoute = location;
-    lastExtra = extra;
-    notifyListeners();
-  }
-}
-
 void main() {
   group('CharacterCard Widget Tests', () {
     late Character testCharacter;
@@ -107,7 +96,6 @@ void main() {
         ),
       );
 
-      // Verificar se o InkWell está presente para navegação
       expect(find.byType(InkWell), findsOneWidget);
     });
 
@@ -122,15 +110,12 @@ void main() {
         ),
       );
 
-      // Verificar se o InkWell está presente
       expect(find.byType(InkWell), findsOneWidget);
 
-      // Obter o widget InkWell e verificar se o onTap está configurado
       final inkWell = tester.widget<InkWell>(find.byType(InkWell));
       expect(inkWell.onTap, isNotNull);
       expect(inkWell.onTap, isA<Function>());
 
-      // Verificar se o InkWell tem o borderRadius configurado corretamente
       expect(inkWell.borderRadius, BorderRadius.circular(8.0));
     });
 
