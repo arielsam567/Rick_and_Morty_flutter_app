@@ -91,13 +91,18 @@ class HomeController extends ChangeNotifier {
 
     result.fold(
       (error) {
-        _setError(error);
-        _setLoading(false);
-        _setLoadingMore(false);
-        if (page == 1) {
+        // Se a mensagem de erro for "Nenhum resultado encontrado", não é um erro real
+        if (error == 'Nenhum resultado encontrado') {
           _allCharacters = [];
           _filteredCharacters = [];
+          _hasMorePages = false;
+          _nextPageUrl = null;
+          _currentPage = 1;
+        } else {
+          _setError(error);
         }
+        _setLoading(false);
+        _setLoadingMore(false);
       },
       (response) {
         if (page == 1) {

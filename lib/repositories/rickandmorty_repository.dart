@@ -18,7 +18,7 @@ class RickAndMortyRepository {
         (json) => Character.fromJson(json),
       ));
     } catch (e) {
-      return Left('Erro ao buscar personagens: $e');
+      return Left(_getUserFriendlyErrorMessage(e, 'carregar personagens'));
     }
   }
 
@@ -27,7 +27,7 @@ class RickAndMortyRepository {
       final response = await _httpClient.get('character/$id');
       return Right(Character.fromJson(response.data));
     } catch (e) {
-      return Left('Erro ao buscar personagem: $e');
+      return Left(_getUserFriendlyErrorMessage(e, 'carregar personagem'));
     }
   }
 
@@ -43,7 +43,19 @@ class RickAndMortyRepository {
         (json) => Character.fromJson(json),
       ));
     } catch (e) {
-      return Left('Erro ao buscar personagens por nome: $e');
+      // Para busca por nome, se não encontrar nada, não é um erro
+      if (_isNotFoundError(e)) {
+        return Right(PaginatedResponse<Character>(
+          info: Info(
+            count: 0,
+            pages: 0,
+            next: null,
+            prev: null,
+          ),
+          results: [],
+        ));
+      }
+      return Left(_getUserFriendlyErrorMessage(e, 'buscar personagens'));
     }
   }
 
@@ -61,7 +73,42 @@ class RickAndMortyRepository {
             .toList());
       }
     } catch (e) {
-      return Left('Erro ao buscar personagens por IDs: $e');
+      return Left(_getUserFriendlyErrorMessage(e, 'carregar personagens'));
     }
+  }
+
+  /// Verifica se o erro é um 404 (não encontrado)
+  bool _isNotFoundError(dynamic error) {
+    if (error is Exception) {
+      final errorString = error.toString().toLowerCase();
+      return errorString.contains('404') ||
+          errorString.contains('not found') ||
+          errorString.contains('não encontrado');
+    }
+    return false;
+  }
+
+  /// Converte erros técnicos em mensagens amigáveis ao usuário
+  String _getUserFriendlyErrorMessage(dynamic error, String action) {
+    final errorString = error.toString().toLowerCase();
+
+    if (errorString.contains('404') || errorString.contains('not found')) {
+      return 'Nenhum resultado encontrado';
+    }
+
+    if (errorString.contains('timeout') || errorString.contains('timed out')) {
+      return 'Tempo limite excedido. Verifique sua conexão com a internet.';
+    }
+
+    if (errorString.contains('network') || errorString.contains('connection')) {
+      return 'Erro de conexão. Verifique sua internet e tente novamente.';
+    }
+
+    if (errorString.contains('500') || errorString.contains('server')) {
+      return 'Erro no servidor. Tente novamente em alguns instantes.';
+    }
+
+    // Para outros erros, retorna uma mensagem genérica
+    return 'Erro ao $action. Tente novamente.';
   }
 }

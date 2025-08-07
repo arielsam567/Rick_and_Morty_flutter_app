@@ -86,11 +86,23 @@ class _HomePageState extends State<HomePage> {
                 }
 
                 if (_controller.characters.isEmpty) {
+                  // Se está em modo de busca e não encontrou nada
+                  if (_controller.isSearchMode &&
+                      _controller.searchQuery.isNotEmpty) {
+                    return EmptyStateWidget(
+                      icon: Icons.search_off,
+                      title: 'Nenhum personagem encontrado',
+                      subtitle:
+                          'Tente buscar por outro nome ou verifique a ortografia.',
+                    );
+                  }
+
+                  // Se não está em busca e não há personagens
                   return EmptyStateWidget(
-                    icon: Icons.search_off,
-                    title: _controller.searchQuery.isEmpty
-                        ? 'Nenhum personagem encontrado'
-                        : 'Nenhum personagem encontrado para "${_controller.searchQuery}"',
+                    icon: Icons.people_outline,
+                    title: 'Nenhum personagem encontrado',
+                    subtitle:
+                        'Não foi possível carregar os personagens no momento.',
                   );
                 }
 
