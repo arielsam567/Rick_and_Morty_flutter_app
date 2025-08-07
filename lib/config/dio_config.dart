@@ -1,12 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ricky_and_martie_app/config/environments.dart';
 
 class DioConfig {
-  static Dio createDio() {
+  static Dio createDio({String? baseUrl}) {
+    // URL base obtida do arquivo de ambientes
+    // Pode ser sobrescrita através de parâmetros de linha de comando
+    final finalBaseUrl = baseUrl ?? Environments.baseUrl;
+
     final dio = Dio();
 
     // Configuração base
-    dio.options.baseUrl = 'https://rickandmortyapi.com/api/';
+    dio.options.baseUrl = finalBaseUrl;
     dio.options.connectTimeout = const Duration(seconds: 30);
     dio.options.receiveTimeout = const Duration(seconds: 30);
     dio.options.headers = {
