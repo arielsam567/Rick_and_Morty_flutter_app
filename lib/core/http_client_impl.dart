@@ -4,7 +4,6 @@ import 'package:ricky_and_martie_app/core/http_client_abstract.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-/// Cliente HTTP usando Dio
 class HttpClient implements HttpClientBase {
   final Dio _dio;
 
@@ -14,24 +13,20 @@ class HttpClient implements HttpClientBase {
   Future<HttpResponse> get(String path,
       {Map<String, dynamic>? queryParameters}) async {
     try {
-      // Criar chave única para o cache baseada na URL e parâmetros
       final cacheKey = _generateCacheKey(path, queryParameters);
 
-      // Tentar buscar dados do cache primeiro
       final cachedData = await _getFromCache(cacheKey);
       if (cachedData != null) {
         debugPrint('🔍 Dados encontrados no cache: $cacheKey');
         return cachedData;
       }
       debugPrint('🔍 Não há dados no cache para: $cacheKey');
-      // Se não há cache, fazer a requisição
       final response = await _dio.get(path, queryParameters: queryParameters);
       final httpResponse = HttpResponse(
         data: response.data,
         statusCode: response.statusCode ?? 200,
       );
 
-      // Salvar no cache
       await _saveToCache(cacheKey, httpResponse);
 
       return httpResponse;
@@ -40,7 +35,6 @@ class HttpClient implements HttpClientBase {
     }
   }
 
-  /// Gera uma chave única para o cache baseada na URL e parâmetros
   String _generateCacheKey(String path, Map<String, dynamic>? queryParameters) {
     final queryString = queryParameters != null
         ? queryParameters.entries.map((e) => '${e.key}=${e.value}').join('&')
@@ -48,7 +42,6 @@ class HttpClient implements HttpClientBase {
     return '$path?$queryString';
   }
 
-  /// Busca dados do cache local
   Future<HttpResponse?> _getFromCache(String cacheKey) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -63,12 +56,11 @@ class HttpClient implements HttpClientBase {
       }
       return null;
     } catch (e) {
-      // Se houver erro ao ler cache, retorna null
+      debugPrint('Erro ao buscar cache: $e');
       return null;
     }
   }
 
-  /// Salva dados no cache local
   Future<void> _saveToCache(String cacheKey, HttpResponse response) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -80,7 +72,6 @@ class HttpClient implements HttpClientBase {
 
       await prefs.setString('cache_$cacheKey', json.encode(cacheData));
     } catch (e) {
-      // Se houver erro ao salvar cache, apenas ignora
       debugPrint('Erro ao salvar cache: $e');
     }
   }

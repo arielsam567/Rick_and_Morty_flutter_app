@@ -8,7 +8,6 @@ void main(List<String> args) async {
 
   setUrlStrategy(PathUrlStrategy());
 
-  // Log do ambiente atual para debug
   debugPrint('🔧 Ambiente atual: ${Environments.environment}');
   debugPrint('🔧 URL base configurada: ${Environments.baseUrl}');
 

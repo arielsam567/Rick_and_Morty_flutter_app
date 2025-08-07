@@ -8,24 +8,21 @@ import 'package:ricky_and_martie_app/pages/details/details_controller.dart';
 
 class DependencyInjection {
   static List<dynamic> get providers => [
-    // Provider para o Dio
-    Provider<Dio>(
+     Provider<Dio>(
       create: (_) => DioConfig.createDio(),
     ),
 
-    // Provider para o HttpClientBase (classe abstrata)
-    Provider<HttpClientBase>(
+     Provider<HttpClientBase>(
       create: (context) => HttpClient(context.read<Dio>()),
     ),
 
-    // Provider para o RickAndMortyRepository
+    //   para o RickAndMortyRepository
     Provider<RickAndMortyRepository>(
       create: (context) =>
           RickAndMortyRepository(context.read<HttpClientBase>()),
     ),
 
-    // Provider para o DetailsController
-    ChangeNotifierProvider<DetailsController>(
+     ChangeNotifierProvider<DetailsController>(
       create: (context) =>
           DetailsController(context.read<RickAndMortyRepository>()),
     ),

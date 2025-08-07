@@ -36,7 +36,7 @@ class CharacterCardShimmer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //   nome
+                  // Name
                   Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
@@ -50,7 +50,7 @@ class CharacterCardShimmer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  //  espécie
+                  // Species
                   Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
@@ -64,11 +64,11 @@ class CharacterCardShimmer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  //   status e gênero
+                  // Status and Gender
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Shimmer para o status
+                      // Shimmer for status
                       Shimmer.fromColors(
                         baseColor: Colors.grey[300]!,
                         highlightColor: Colors.grey[100]!,
@@ -81,7 +81,7 @@ class CharacterCardShimmer extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //   gênero
+                      // Gender
                       Shimmer.fromColors(
                         baseColor: Colors.grey[300]!,
                         highlightColor: Colors.grey[100]!,
@@ -99,7 +99,7 @@ class CharacterCardShimmer extends StatelessWidget {
                 ],
               ),
             ),
-            // ícone de seta
+            // Arrow icon
             Shimmer.fromColors(
               baseColor: Colors.grey[300]!,
               highlightColor: Colors.grey[100]!,

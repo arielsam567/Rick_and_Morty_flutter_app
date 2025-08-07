@@ -19,8 +19,7 @@ class CharacterImageWidget extends StatelessWidget {
       height: size + 20,
       child: Stack(
         alignment: Alignment.center,
-        children: [
-          // Imagem do personagem
+        children: [  
           Container(
             width: size,
             height: size,

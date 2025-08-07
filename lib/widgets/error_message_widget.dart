@@ -73,8 +73,7 @@ class ErrorMessageWidget extends StatelessWidget {
     );
   }
 
-  /// Verifica se deve mostrar a mensagem de erro (filtra mensagens técnicas)
-  bool _shouldShowMessage(String message) {
+   bool _shouldShowMessage(String message) {
     final technicalTerms = [
       'exception',
       'status code',

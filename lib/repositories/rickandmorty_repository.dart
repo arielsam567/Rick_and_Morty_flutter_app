@@ -43,8 +43,7 @@ class RickAndMortyRepository {
         (json) => Character.fromJson(json),
       ));
     } catch (e) {
-      // Para busca por nome, se não encontrar nada, não é um erro
-      if (_isNotFoundError(e)) {
+       if (_isNotFoundError(e)) {
         return Right(PaginatedResponse<Character>(
           info: Info(
             count: 0,
@@ -75,8 +74,7 @@ class RickAndMortyRepository {
     }
   }
 
-  /// Verifica se o erro é um 404 (não encontrado)
-  bool _isNotFoundError(error) {
+   bool _isNotFoundError(error) {
     if (error is Exception) {
       final errorString = error.toString().toLowerCase();
       return errorString.contains('404') ||
@@ -86,8 +84,7 @@ class RickAndMortyRepository {
     return false;
   }
 
-  /// Converte erros técnicos em mensagens amigáveis ao usuário
-  String _getUserFriendlyErrorMessage(error, String action) {
+   String _getUserFriendlyErrorMessage(error, String action) {
     final errorString = error.toString().toLowerCase();
 
     if (errorString.contains('404') || errorString.contains('not found')) {

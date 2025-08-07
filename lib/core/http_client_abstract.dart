@@ -8,13 +8,10 @@ class HttpResponse {
   });
 }
 
-/// Classe abstrata para cliente HTTP
 abstract class HttpClientBase {
-  /// Realiza uma requisição GET
   Future<HttpResponse> get(String path,
       {Map<String, dynamic>? queryParameters});
 
-  /// Realiza uma requisição POST
   Future<HttpResponse> post(String path,
       {data, Map<String, dynamic>? queryParameters});
 }

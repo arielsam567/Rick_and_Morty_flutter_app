@@ -76,27 +76,10 @@ class FeaturedChaptersWidget extends StatelessWidget {
     final parts = episodeUrl.split('/');
     final episodeNumber = parts.last;
 
-    // Simular informações do episódio baseado no número
-    final episodeNames = {
-      '1': 'Pilot',
-      '2': 'Lawnmower Dog',
-      '3': 'Anatomy Park',
-      '4': 'M. Night Shaym-Aliens!',
-      '5': 'Meeseeks and Destroy',
-    };
-
-    final episodeDates = {
-      '1': 'December 2, 2013',
-      '2': 'December 9, 2013',
-      '3': 'December 16, 2013',
-      '4': 'January 13, 2014',
-      '5': 'January 20, 2014',
-    };
-
     return {
       'code': 'S01E$episodeNumber',
-      'name': episodeNames[episodeNumber] ?? 'Episode $episodeNumber',
-      'date': episodeDates[episodeNumber] ?? 'Unknown Date',
+      'name': 'Episode $episodeNumber',
+      'date': 'Unknown Date',
     };
   }
 }

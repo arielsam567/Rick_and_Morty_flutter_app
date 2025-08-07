@@ -76,13 +76,12 @@ class _DetailsPageState extends State<DetailsPage> {
                   children: [
                     const SizedBox(height: 16),
 
-                    // Imagem do personagem com status
                     CharacterImageWidget(
                       character: character,
                     ),
                     const SizedBox(height: 16),
 
-                    // Nome do personagem
+                    // Name
                     Text(
                       character.name,
                       style: const TextStyle(
@@ -94,7 +93,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Seção Properties
                     PropertiesWidget(
                       gender: character.gender,
                       species: character.species,
@@ -102,14 +100,12 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Seção Whereabouts
                     WhereaboutsWidget(
                       origin: character.origin,
                       location: character.location,
                     ),
                     const SizedBox(height: 24),
 
-                    // Seção Featured Chapters
                     FeaturedChaptersWidget(
                       episodes: character.episode,
                     ),

@@ -16,7 +16,6 @@ class DetailsPageShimmer extends StatelessWidget {
               highlightColor: Colors.grey[100]!,
               child: Column(
                 children: [
-                  // Header com botão voltar
                   Row(
                     children: [
                       Container(
@@ -30,8 +29,7 @@ class DetailsPageShimmer extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-
-                  // Imagem do personagem (círculo)
+ 
                   Center(
                     child: Column(
                       children: [
@@ -57,8 +55,7 @@ class DetailsPageShimmer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // Nome do personagem
+ 
                   Container(
                     width: 200,
                     height: 28,
@@ -68,8 +65,7 @@ class DetailsPageShimmer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-
-                  // Seção Properties
+ 
                   _buildSectionHeader(),
                   const SizedBox(height: 16),
                   _buildPropertyRow('GENDER'),
@@ -78,8 +74,7 @@ class DetailsPageShimmer extends StatelessWidget {
                   const SizedBox(height: 8),
                   _buildPropertyRow('STATUS'),
                   const SizedBox(height: 24),
-
-                  // Seção Whereabouts
+ 
                   _buildSectionHeader(),
                   const SizedBox(height: 16),
                   _buildPropertyRow('ORIGIN'),
@@ -87,10 +82,9 @@ class DetailsPageShimmer extends StatelessWidget {
                   _buildPropertyRow('LOCATION'),
                   const SizedBox(height: 24),
 
-                  // Seção Featured Chapters
                   _buildSectionHeader(),
                   const SizedBox(height: 16),
-                  // Placeholder para episódios
+
                   Container(
                     width: double.infinity,
                     height: 60,
