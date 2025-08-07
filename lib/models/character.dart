@@ -9,6 +9,8 @@ class Character {
   final List<String> episode;
   final String url;
   final DateTime created;
+  final String origin;
+  final String location;
 
   Character({
     required this.id,
@@ -21,6 +23,8 @@ class Character {
     required this.episode,
     required this.url,
     required this.created,
+    required this.origin,
+    required this.location,
   });
 
   factory Character.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,8 @@ class Character {
       episode: List<String>.from(json['episode']),
       url: json['url'],
       created: DateTime.parse(json['created']),
+      origin: json['origin']['name'] ?? 'Unknown',
+      location: json['location']['name'] ?? 'Unknown',
     );
   }
 
@@ -50,6 +56,8 @@ class Character {
       'episode': episode,
       'url': url,
       'created': created.toIso8601String(),
+      'origin': {'name': origin},
+      'location': {'name': location},
     };
   }
 }

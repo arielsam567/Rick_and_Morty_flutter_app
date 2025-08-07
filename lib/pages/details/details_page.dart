@@ -1,49 +1,142 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ricky_and_martie_app/models/character.dart';
+import 'package:ricky_and_martie_app/widgets/properties_widget.dart';
+import 'package:ricky_and_martie_app/widgets/whereabouts_widget.dart';
+import 'package:ricky_and_martie_app/widgets/featured_chapters_widget.dart';
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
+  final Character character;
+
+  const DetailsPage({
+    required this.character,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detalhes'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/'),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                // Header com botão voltar
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => context.go('/'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Imagem do personagem com status
+                _buildCharacterImage(),
+                const SizedBox(height: 16),
+
+                // Nome do personagem
+                Text(
+                  character.name,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+
+                // Seção Properties
+                PropertiesWidget(
+                  gender: character.gender,
+                  species: character.species,
+                  status: character.status,
+                ),
+                const SizedBox(height: 24),
+
+                // Seção Whereabouts
+                WhereaboutsWidget(
+                  origin: character.origin,
+                  location: character.location,
+                ),
+                const SizedBox(height: 24),
+
+                // Seção Featured Chapters
+                FeaturedChaptersWidget(
+                  episodes: character.episode,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.info_outline,
-              size: 80,
-              color: Colors.blue,
+    );
+  }
+
+  Widget _buildCharacterImage() {
+    final isDead = character.status.toLowerCase() == 'dead';
+    final borderColor = isDead ? Colors.red : Colors.green;
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // Imagem do personagem
+        Container(
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: borderColor,
+              width: 3,
             ),
-            SizedBox(height: 20),
-            Text(
-              'Página de Detalhes',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          child: ClipOval(
+            child: CachedNetworkImage(
+              imageUrl: character.image,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
+                color: Colors.grey[300],
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                color: Colors.grey[300],
+                child: const Icon(
+                  Icons.person,
+                  size: 50,
+                  color: Colors.grey,
+                ),
+              ),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Esta é a página de detalhes do aplicativo',
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Aqui você pode adicionar mais informações e funcionalidades específicas.',
-              style: TextStyle(fontSize: 14),
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
         ),
-      ),
+
+        // Badge de status
+        Positioned(
+          bottom: 0,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: borderColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              character.status.toUpperCase(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
