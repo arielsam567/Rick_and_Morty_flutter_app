@@ -15,7 +15,6 @@ class FeaturedChaptersWidget extends StatelessWidget {
       children: [
         const SectionHeader(title: 'FEATURED CHAPTERS'),
         const SizedBox(height: 16),
-        // ...episodes.map((episode) => _buildChapterItem(episode)),
         ListView.builder(
           itemCount: episodes.length,
           shrinkWrap: true,
