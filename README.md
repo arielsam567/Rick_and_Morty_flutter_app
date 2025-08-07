@@ -130,9 +130,7 @@ O arquivo `.vscode/launch.json` foi configurado com diferentes opções de debug
 - **Development Environment** - Usa a URL de desenvolvimento
 - **Production Environment** - Usa a URL de produção
 
-Para cada plataforma (Android, iOS, Web Chrome, Web Edge, Current Device), você tem as 3 opções de ambiente disponíveis no menu de debug do VS Code.
-
- 
+  
 
 
 ## 📁 Estrutura do Projeto
