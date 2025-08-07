@@ -7,16 +7,13 @@ class SearchFieldWidget extends StatelessWidget {
   final double maxWidth = 600;
 
   const SearchFieldWidget({
-    super.key,
-    required this.onChanged,
-    required this.onClear,
+    required this.onChanged, required this.onClear, super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints:
-          maxWidth != null ? BoxConstraints(maxWidth: maxWidth!) : null,
+      constraints: BoxConstraints(maxWidth: maxWidth),
       padding: const EdgeInsets.all(16.0),
       child: TextField(
         onChanged: onChanged,

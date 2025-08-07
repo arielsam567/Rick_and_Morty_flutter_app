@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:ricky_and_martie_app/config/strings.dart';
 import 'package:ricky_and_martie_app/pages/home/home_controller.dart';
 import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
-import 'package:ricky_and_martie_app/widgets/empty_state_widget.dart';
 import 'package:ricky_and_martie_app/widgets/character_list_shimmer.dart';
 import 'package:ricky_and_martie_app/widgets/responsive_character_list.dart';
 import 'package:ricky_and_martie_app/widgets/search_field_widget.dart';
+import 'package:ricky_and_martie_app/widgets/empty_characters_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,19 +63,8 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   if (_controller.characters.isEmpty) {
-                    if (_controller.emptyState) {
-                      return EmptyStateWidget(
-                        icon: Icons.search_off,
-                        title: 'Nenhum personagem encontrado',
-                        subtitle: 'Tente buscar por outro nome.',
-                      );
-                    }
-
-                    return EmptyStateWidget(
-                      icon: Icons.people_outline,
-                      title: 'Nenhum personagem encontrado',
-                      subtitle:
-                          'Não foi possível carregar os personagens no momento.',
+                    return EmptyCharactersWidget(
+                      isEmptyState: _controller.emptyState,
                     );
                   }
 

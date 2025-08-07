@@ -17,7 +17,6 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('build item ${character.name}');
     //define que a altura maxima é 110 do card
     return Center(
       child: SizedBox(
