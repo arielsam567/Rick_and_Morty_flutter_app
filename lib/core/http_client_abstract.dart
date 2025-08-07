@@ -1,4 +1,3 @@
- 
 class HttpResponse {
   final dynamic data;
   final int statusCode;
@@ -27,5 +26,3 @@ abstract class HttpClientBase {
   Future<HttpResponse> delete(String path,
       {Map<String, dynamic>? queryParameters});
 }
-
- 
