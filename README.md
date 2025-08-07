@@ -12,7 +12,19 @@ Este aplicativo permite aos usuários explorar o universo de Rick and Morty atra
 
 ### 🎨 Inspiração do Layout
 
-O design e layout da aplicação foram inspirados na imagem de referência disponível em `assets/imgs/image_inspiracao.png`. Esta imagem serviu como base para a criação da interface do usuário.
+O design e layout da aplicação foram inspirados na imagem de referência abaixo. Esta imagem serviu como base para a criação da interface do usuário.
+
+![Imagem de Inspiração](assets/imgs/image_inspiracao.png)
+
+### 📱 Como Ficou o Resultado
+
+A aplicação foi desenvolvida seguindo a inspiração acima e resultou nas seguintes telas:
+
+#### 🏠 Tela Inicial (Home)
+![Tela Inicial](assets/imgs/resultado_home.png)
+
+#### 👤 Tela de Detalhes
+![Tela de Detalhes](assets/imgs/resultado_details.png)
 
 ## 🚀 Tecnologias Utilizadas
 
