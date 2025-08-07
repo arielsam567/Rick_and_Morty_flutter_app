@@ -16,4 +16,5 @@ class MyColors {
   // Cores básicas
   static const black = Colors.black;
   static const white = Colors.white;
+  static const lightGray = Color(0xff808080);
 }

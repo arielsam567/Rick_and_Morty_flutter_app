@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ricky_and_martie_app/config/themes/colors.dart';
+import 'package:ricky_and_martie_app/widgets/retry_button.dart';
 
 class ErrorMessageWidget extends StatelessWidget {
   final IconData icon;
@@ -33,7 +34,7 @@ class ErrorMessageWidget extends StatelessWidget {
             title,
             style: const TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              color: MyColors.lightGray,
             ),
             textAlign: TextAlign.center,
           ),
@@ -41,15 +42,15 @@ class ErrorMessageWidget extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               message!,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: MyColors.lightGray),
               textAlign: TextAlign.center,
             ),
           ],
           if (onRetry != null) ...[
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: onRetry,
-              child: Text(retryButtonText ?? 'Tentar Novamente'),
+            const SizedBox(height: 30),
+            RetryButton(
+              onPressed: onRetry!,
+              text: retryButtonText ?? 'Tentar Novamente',
             ),
           ],
         ],

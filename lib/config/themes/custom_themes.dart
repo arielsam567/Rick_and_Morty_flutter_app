@@ -229,5 +229,11 @@ class CustomThemes {
       refreshBackgroundColor: MyColors.black,
     ),
     dialogTheme: DialogThemeData(backgroundColor: MyColors.black),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(MyColors.primary),
+        foregroundColor: WidgetStateProperty.all(MyColors.white),
+      ),
+    ),
   );
 }

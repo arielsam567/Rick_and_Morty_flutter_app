@@ -6,6 +6,7 @@ import 'package:ricky_and_martie_app/pages/home/home_controller.dart';
 import 'package:ricky_and_martie_app/widgets/character_card.dart';
 import 'package:ricky_and_martie_app/widgets/error_message_widget.dart';
 import 'package:ricky_and_martie_app/widgets/empty_state_widget.dart';
+import 'package:ricky_and_martie_app/widgets/character_list_shimmer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,49 +54,45 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Expanded(child: _buildBody()),
+          Expanded(
+            child: ListenableBuilder(
+              listenable: _controller,
+              builder: (context, child) {
+                if (_controller.isLoading) {
+                  return const CharacterListShimmer();
+                }
+
+                if (_controller.errorMessage != null) {
+                  return ErrorMessageWidget(
+                    icon: Icons.error_outline,
+                    title: 'Erro ao carregar personagens',
+                    message: _controller.errorMessage,
+                    onRetry: _controller.retry,
+                  );
+                }
+
+                if (_controller.characters.isEmpty) {
+                  return EmptyStateWidget(
+                    icon: Icons.search_off,
+                    title: _controller.searchQuery.isEmpty
+                        ? 'Nenhum personagem encontrado'
+                        : 'Nenhum personagem encontrado para "${_controller.searchQuery}"',
+                  );
+                }
+
+                return ListView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: _controller.characters.length,
+                  itemBuilder: (context, index) {
+                    final character = _controller.characters[index];
+                    return CharacterCard(character: character);
+                  },
+                );
+              },
+            ),
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildBody() {
-    return ListenableBuilder(
-      listenable: _controller,
-      builder: (context, child) {
-        if (_controller.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        if (_controller.errorMessage == null) {
-          return ErrorMessageWidget(
-            icon: Icons.error_outline,
-            title: 'Erro ao carregar personagens',
-            message: _controller.errorMessage,
-            onRetry: _controller.retry,
-          );
-        }
-
-        if (_controller.characters.isEmpty) {
-          return EmptyStateWidget(
-            icon: Icons.search_off,
-            title: _controller.searchQuery.isEmpty
-                ? 'Nenhum personagem encontrado'
-                : 'Nenhum personagem encontrado para "${_controller.searchQuery}"',
-          );
-        }
-
-        return ListView.builder(
-          padding: const EdgeInsets.all(8.0),
-          itemCount: _controller.characters.length,
-          itemBuilder: (context, index) {
-            final character = _controller.characters[index];
-            return CharacterCard(character: character);
-          },
-        );
-      },
     );
   }
 }

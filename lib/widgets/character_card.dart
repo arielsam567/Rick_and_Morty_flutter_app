@@ -8,7 +8,7 @@ import 'package:ricky_and_martie_app/widgets/status_indicator.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
-  static const double imageSize = 80.0;
+  static const double imageSize = 100.0;
 
   const CharacterCard({
     required this.character,
@@ -30,12 +30,12 @@ class CharacterCard extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(8.0),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: Row(
             children: [
               // Imagem do personagem à esquerda
               ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(12.0),
                 child: CachedNetworkImage(
                   imageUrl: character.image,
                   width: imageSize,
