@@ -151,7 +151,7 @@ class HomeController extends ChangeNotifier {
     } else {
       // Debounce de 500ms para evitar muitas requisições
       _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-        searchCharactersByName(_searchQuery, page: 1);
+        searchCharactersByName(_searchQuery);
       });
     }
   }
@@ -185,7 +185,7 @@ class HomeController extends ChangeNotifier {
 
   void retry() {
     if (_isSearchMode) {
-      searchCharactersByName(_searchQuery, page: 1);
+      searchCharactersByName(_searchQuery);
     } else {
       loadCharacters(refresh: true);
     }

@@ -49,8 +49,6 @@ class RickAndMortyRepository {
           info: Info(
             count: 0,
             pages: 0,
-            next: null,
-            prev: null,
           ),
           results: [],
         ));
@@ -78,7 +76,7 @@ class RickAndMortyRepository {
   }
 
   /// Verifica se o erro é um 404 (não encontrado)
-  bool _isNotFoundError(dynamic error) {
+  bool _isNotFoundError(error) {
     if (error is Exception) {
       final errorString = error.toString().toLowerCase();
       return errorString.contains('404') ||
@@ -89,7 +87,7 @@ class RickAndMortyRepository {
   }
 
   /// Converte erros técnicos em mensagens amigáveis ao usuário
-  String _getUserFriendlyErrorMessage(dynamic error, String action) {
+  String _getUserFriendlyErrorMessage(error, String action) {
     final errorString = error.toString().toLowerCase();
 
     if (errorString.contains('404') || errorString.contains('not found')) {
