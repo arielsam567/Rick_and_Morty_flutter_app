@@ -37,12 +37,19 @@ class Character {
     required this.location,
   });
 
+  static LifeStatus _parseStatus(String statusString) {
+    try {
+      return LifeStatus.values.byName(statusString);
+    } catch (e) {
+      return LifeStatus.unknown;
+    }
+  }
+
   factory Character.fromJson(Map<String, dynamic> json) {
-    
     return Character(
       id: json['id'],
       name: json['name'],
-      status: LifeStatus.values.byName(json['status']),
+      status: _parseStatus(json['status']),
       species: json['species'],
       type: json['type'],
       gender: json['gender'],
